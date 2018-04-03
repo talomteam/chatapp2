@@ -45,9 +45,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         });
    });
    bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
-    console.log("message: "+ message.getText()+ " userID: "+ message.getUserId()+ " istype: " +message.isType());
+    console.log("message: "+ message.getText()+ " userID: "+ message.getUserId()+ " gettype: " +message.getType());
     console.log(replyToken)
-    console.log(message.getText())
+    console.log(message)
   });
    
 });
