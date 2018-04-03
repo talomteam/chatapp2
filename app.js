@@ -48,6 +48,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     console.log("message: "+ message.getText()+ " userID: "+ message.getUserId()+ " gettype: " +message.getType());
     console.log(replyToken)
     console.log(message)
+    bot.pushTextMessage(message.getUserId(), 'รับทราบ ++');
   });
    
 });
