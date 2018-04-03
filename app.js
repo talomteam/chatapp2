@@ -19,21 +19,15 @@ app.get('/', function(req, res,next) {
     res.sendFile(__dirname + '/index.html');
 });
 
-bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
-    console.log("hook")
-    console.log(replyToken)
-    console.log(message.getText())
-  });
+
 
 mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
    if(err){
        throw err;
    }
    console.log('Mongo Connected...');
-   
+   var room =  db.collection('rooms');
    io.on('connection',function(socket){
-        var room =  db.collection('rooms');
-
         room.find().limit(100).sort({_id:1}).toArray(function(err,res){
             if (err){
                 throw err
@@ -49,11 +43,12 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             console.log('getmessageinroom')
             console.log(data);
         });
-
-        
-
-
    });
+   bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
+    console.log("hook")
+    console.log(replyToken)
+    console.log(message.getText())
+  });
    
 });
 
