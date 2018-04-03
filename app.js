@@ -22,9 +22,9 @@ app.get('/', function(req, res,next) {
 bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
     console.log("hook")
     console.log(replyToken)
-    console.log(message)
+    console.log(message.getText())
   });
-  
+
 mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
    if(err){
        throw err;
