@@ -48,6 +48,10 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     console.log("message: "+ message.getText()+ " userID: "+ message.getUserId()+ " gettype: " +message.getType());
     console.log(replyToken)
     console.log(message)
+    console.log("isUserEvent : "+ message.isUserEvent());
+    console.log("isGroupEvent : "+ message.isGroupEvent());
+    console.log("isRoomEvent : "+ message.isRoomEvent());
+    
     bot.pushTextMessage(message.getUserId(), 'รับทราบ ++');
   });
    
