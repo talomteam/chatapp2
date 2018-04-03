@@ -19,7 +19,12 @@ app.get('/', function(req, res,next) {
     res.sendFile(__dirname + '/index.html');
 });
 
-
+bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
+    console.log("hook")
+    console.log(replyToken)
+    console.log(message)
+  });
+  
 mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
    if(err){
        throw err;
@@ -45,11 +50,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             console.log(data);
         });
 
-        bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
-            console.log("hook")
-            console.log(replyToken)
-            console.log(message)
-          });
+        
 
 
    });
