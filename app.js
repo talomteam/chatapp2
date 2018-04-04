@@ -35,7 +35,6 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             }
             socket.emit('rooms',res)
         });
-
         socket.on('reply',function(data){
             console.log('reply')
             console.log(data);
@@ -79,9 +78,11 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             console.log('new..')
             rooms.insert({"groupId:":groupdId, "channnel":{"name":"LINE@","type":groupType,"members":[]}})
             messages.insert({"groupId":groupdId,"messages":[messageEvent]})
+            io.sockets.emit('messageinroom','')
         }else{
             console.log('exits')
             messages.update({"groupdId":groupdId},{$push:{"messages":messageEvent}});
+            io.sockets.emit('messageinroom','')
         }
         
     }
