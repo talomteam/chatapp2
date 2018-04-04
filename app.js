@@ -46,7 +46,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         });
    });
    bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
-    console.log("message: "+ message.getText()+ " userID: "+ message.getUserId()+ " gettype: " +message.getType()+ " getEvent:":message.getEvent());
+    console.log("message: "+ message.getText()+ " userID: "+ message.getUserId()+ " gettype: " +message.getType()+ " getEvent: "+message.getEvent());
     console.log(replyToken)
     console.log(message)
     console.log("isUserEvent : "+ message.isUserEvent());
