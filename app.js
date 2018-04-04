@@ -53,9 +53,6 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     console.log("isUserEvent : "+ message.isUserEvent());
     console.log("isGroupEvent : "+ message.isGroupEvent());
     console.log("isRoomEvent : "+ message.isRoomEvent());
-
-    
-
     var groupdId = '';
     var groupType = '' ;
     if(message.isUserEvent()){
@@ -65,7 +62,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         groupdId = message.getGroupId()
         groupType = 'Group' ;
     }else if (message.isRoomEvent()){
-        groupdId = message.getGroupId();
+        groupdId = message.getRoomId();
         groupType = 'Room' ;
     }
 
