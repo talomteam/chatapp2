@@ -26,9 +26,10 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
        throw err;
    }
    console.log('Mongo Connected...');
-   var room =  db.collection('rooms');
+   var rooms =  db.collection('rooms');
+   var messages = db.collection('messages')
    io.on('connection',function(socket){
-        room.find().limit(100).sort({_id:1}).toArray(function(err,res){
+        rooms.find().limit(100).sort({_id:1}).toArray(function(err,res){
             if (err){
                 throw err
             }
@@ -51,8 +52,36 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     console.log("isUserEvent : "+ message.isUserEvent());
     console.log("isGroupEvent : "+ message.isGroupEvent());
     console.log("isRoomEvent : "+ message.isRoomEvent());
-    
+
     bot.pushTextMessage(message.getUserId(), 'รับทราบ ++');
+
+    var groupdId = '';
+    var groupType = '' ;
+    if(message.isUserEvent()){
+        groupdId = message.getUserId();
+        groupType = 'User' ;
+    }else if (message.isGroupEvent()){
+        groupdId = message.getGroupId()
+        groupType = 'Group' ;
+    }else if (message.isRoomEvent()){
+        groupdId = message.getGroupId();
+        groupType = 'Room' ;
+    }
+    if (groupdId != ''){
+        room_count = rooms.find({"groupId":groupdId}).count()
+        if (room_count == 0){
+            messageType = message.getMessageType();
+            messageId = message.getMessageId()
+            rooms.insert({"groupId:":groupdId, "channnel":{"name":"LINE@","type":groupType,"members":[]}})
+            messages.insert({"groupId":groupdId,"messages":[{"type":messageType,"message":message.getText(),"id":messageId}]})
+        }else{
+            messageType = message.getMessageType();
+            messageId = message.getMessageId();
+            messages.update({"groupdId":groupdId,$push:{"mesasges":{"type":messageType,"message":message.getText(),"id":messageId}}});
+        }
+        
+    }
+    
   });
    
 });
