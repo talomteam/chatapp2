@@ -79,8 +79,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             console.log('exits')
             messageType = message.getMessageType();
             messageId = message.getMessageId();
-            messages.update({"groupdId":groupdId,
-            $push:{"messages":{"type":messageType,"message":message.getText(),"id":messageId}}});
+            messages.update({"groupdId":groupdId},{$push:{"messages":{"type":messageType,"message":message.getText(),"id":messageId}}});
         }
         
     }
