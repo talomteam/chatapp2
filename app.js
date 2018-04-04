@@ -70,11 +70,13 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     if (groupdId != ''){
         room_count = rooms.find({"groupId":groupdId}).count()
         if (room_count == 0){
+            console.log('new..')
             messageType = message.getMessageType();
             messageId = message.getMessageId()
             rooms.insert({"groupId:":groupdId, "channnel":{"name":"LINE@","type":groupType,"members":[]}})
             messages.insert({"groupId":groupdId,"messages":[{"type":messageType,"message":message.getText(),"id":messageId}]})
         }else{
+            console.log('exits')
             messageType = message.getMessageType();
             messageId = message.getMessageId();
             messages.update({"groupdId":groupdId,$push:{"mesasges":{"type":messageType,"message":message.getText(),"id":messageId}}});
