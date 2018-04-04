@@ -47,7 +47,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
    });
    bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
     //console.log("message: "+ message.getText()+ " userID: "+ message.getUserId()+ " gettype: " +message.getType());
-    console.log(message.getEvent())
+    //console.log(message.getEvent())
     //console.log(replyToken)
     console.log(message)
     console.log("isUserEvent : "+ message.isUserEvent());
@@ -69,18 +69,19 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     bot.pushTextMessage(groupdId, 'รับทราบ ++');
     if (groupdId != ''){
         room_count = rooms.find({"groupId":groupdId}).count()
+
+        messageType = message.getMessageType();
+        messageId = message.getMessageId();
+        messageEvent = message.getEvent();
+        messageEvent["method"] = "received";
+        console.log(messageEvent);
         if (room_count == 0){
             console.log('new..')
-            messageType = message.getMessageType();
-            messageId = message.getMessageId()
             rooms.insert({"groupId:":groupdId, "channnel":{"name":"LINE@","type":groupType,"members":[]}})
-            messages.insert({"groupId":groupdId,"messages":[message.getEvent()]})
+            messages.insert({"groupId":groupdId,"messages":[messageEvent]})
         }else{
             console.log('exits')
-            messageType = message.getMessageType();
-            messageId = message.getMessageId();
-            timestamp = message.getTimestamp();
-            messages.update({"groupdId":groupdId},{$push:{"messages":message.getEvent()}});
+            messages.update({"groupdId":groupdId},{$push:{"messages":messageEvent}});
         }
         
     }
