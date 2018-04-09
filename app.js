@@ -81,7 +81,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     }
     
     //bot.pushTextMessage(groupdId, 'รับทราบ ++');
-    if (groupdId != ''){
+    if (groupId != ''){
         messageType = message.getMessageType();
         messageId = message.getMessageId();
         messageEvent = message.getEvent();
