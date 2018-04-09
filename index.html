@@ -40,7 +40,7 @@
 			<div class="right-section">
 				<div class="message mCustomScrollbar" data-mcs-theme="minimal-dark">
 					<ul>
-                            <li class="msg-left">
+                           <!--  <li class="msg-left">
                                     <div class="msg-left-sub">
                                         <img src="image/man03.png">
                                         <div class="msg-desc">
@@ -59,7 +59,7 @@
                                         </div>
                                         <small>05:25 am</small>
                                     </div>
-                                </li> 
+                                </li>  -->
 					</ul>
 				</div>
 				<div class="right-section-bottom">
@@ -104,7 +104,7 @@
                     room = $(this).find("div.desc small").text()
 
                     displayName = $(this).find("div.desc h5").text()
-                    
+
                     $("div.headRight-section div.headRight-sub h3").text(displayName)
                     $("div.headRight-section div.headRight-sub small").text(room)
 
@@ -159,7 +159,7 @@
 						                    </div>
                                         </li>`;
                                 groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
-                                groupTemplate = groupTemplate.replace("{0}",data[x].channel.name + " : " + data[x].members[0].displayName)
+                                groupTemplate = groupTemplate.replace("{0}",data[x].members[0].displayName)
                                 groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
                             
                             $("div.body-section div.left-section ul").append(groupTemplate)
@@ -205,7 +205,7 @@
                        {
                             var groupTemplate = ` <li class="msg-left">
                                             <div class="msg-left-sub">
-                                                <img src="image/man03.png">
+                                                <img src="image/man01.png">
                                                 <div class="msg-desc">
                                                     {0}
                                                 </div>
