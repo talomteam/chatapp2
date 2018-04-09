@@ -26,12 +26,12 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
        throw err;
    }
    console.log('Mongo Connected...');
-   var rooms =  db.collection('rooms');
-   var messages = db.collection('messages')
+   var dbrooms =  db.collection('rooms');
+   var dbmessages = db.collection('messages')
    io.on('connection',function(socket){
        console.log("client connect")
-        rooms.find().limit(100).sort({_id:1}).toArray(function(err,res){
-            console.log(res)
+        dbrooms.find().limit(100).sort({_id:1}).toArray(function(err,res){
+            //console.log(res)
             if (err){
                 throw err
             }
@@ -69,7 +69,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
 
     bot.pushTextMessage(groupdId, 'รับทราบ ++');
     if (groupdId != ''){
-        room_count = rooms.find({"groupId":groupdId}).count()
+        room_count = dbrooms.find({"groupId":groupdId}).count()
 
         messageType = message.getMessageType();
         messageId = message.getMessageId();
@@ -79,12 +79,12 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         console.log(messageEvent);
         if (room_count == 0){
             console.log('new..')
-            rooms.insert({"groupId:":groupdId, "channnel":{"name":"LINE@","type":groupType,"members":[]}})
-            messages.insert({"groupId":groupdId,"messages":[messageEvent]})
+            dbrooms.insert({"groupId:":groupdId, "channnel":{"name":"LINE@","type":groupType,"members":[]}})
+            dbmessages.insert({"groupId":groupdId,"messages":[messageEvent]})
             io.sockets.emit('messageinroom',messageEvent)
         }else{
             console.log('exits')
-            messages.update({"groupdId":groupdId},{$push:{"messages":messageEvent}});
+            dbmessages.update({"groupdId":groupdId},{$push:{"messages":messageEvent}});
             io.sockets.emit('messageinroom',messageEvent);
         }
         
