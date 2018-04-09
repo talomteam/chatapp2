@@ -47,10 +47,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         });
    });
    bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
-    //console.log("message: "+ message.getText()+ " userID: "+ message.getUserId()+ " gettype: " +message.getType());
-    //console.log(message.getEvent())
-    //console.log(replyToken)
-    console.log(message)
+    
     console.log("isUserEvent : "+ message.isUserEvent());
     console.log("isGroupEvent : "+ message.isGroupEvent());
     console.log("isRoomEvent : "+ message.isRoomEvent());
@@ -66,7 +63,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         groupdId = message.getRoomId();
         groupType = 'Room' ;
     }
-
+    
     bot.pushTextMessage(groupdId, 'รับทราบ ++');
     if (groupdId != ''){
         messageType = message.getMessageType();
@@ -74,6 +71,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         messageEvent = message.getEvent();
         messageEvent["method"] = "received";
         messageEvent["groupId"] = groupdId;
+        console.log(messageEvent)
         dbrooms.count({"groupId":groupdId},function(err,room_count){
             if (room_count === 0){
                 console.log('new..')
