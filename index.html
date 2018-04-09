@@ -101,11 +101,11 @@
                         $(this).removeClass("active")
                     });
                     $(this).addClass("active")
-                    room = $(this).find("div.desc #groupId").text()
+                    room = $(this).find("div.desc small:first").text()
 
                     displayName = $(this).find("div.desc h5").text()
-                    $("div.headRight-section div.headRight-sub h3").text(name)
-
+                    $("div.headRight-section div.headRight-sub h3").text(displayName)
+                    $("div.headRight-section div.headRight-sub small").text(room)
                     type = $(this).find("div.desc small:last").text()
                     $("div.headRight-section div.headRight-sub small:last").text(type)
 
@@ -151,7 +151,7 @@
 							                    <div class="desc">
 								                    <small class="time"></small>
 								                    <h5>{0}</h5>
-                                                    <small id="groupId">{1}</small>
+                                                    <small>{1}</small>
                                                     <small>{2}</small>
 							                    </div>
 						                    </div>
