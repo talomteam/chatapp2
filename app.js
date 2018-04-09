@@ -109,7 +109,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             }else{
                 console.log('exits')
                 var userId = messageEvent.source.userId;
+
                 dbrooms.count({"groupId":groupId,"channel.members.userId":userId},function(err,member_count){
+                    console.log("sss")
                     if (member_count == 0)
                     {
                         bot.getProfile(userId).then(function(data) {
