@@ -103,14 +103,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                     res.push(roomDetail);
                     io.sockets.emit('messageinroom',messageEvent)
                     io.sockets.emit('rooms',res)
-                }).catch(function(error) {
-                    console.log("can not get profile")
-                    var res=[];
-                    res.push(roomDetail);
-                    io.sockets.emit('messageinroom',messageEvent)
-                    io.sockets.emit('rooms',res)
                 });
-                
 
 
 
