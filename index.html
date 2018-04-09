@@ -101,11 +101,13 @@
                         $(this).removeClass("active")
                     });
                     $(this).addClass("active")
-                    room = $(this).find("div.desc small:first-child").text()
+                    room = $(this).find("div.desc small").text()
 
                     displayName = $(this).find("div.desc h5").text()
+                    
                     $("div.headRight-section div.headRight-sub h3").text(displayName)
                     $("div.headRight-section div.headRight-sub small").text(room)
+
                     type = $(this).find("div.desc small:last").text()
                     $("div.headRight-section div.headRight-sub small:last").text(type)
 
@@ -152,12 +154,12 @@
 								                    <small class="time"></small>
 								                    <h5>{0}</h5>
                                                     <small>{1}</small>
-                                                    <small>{2}</small>
+                                                    
 							                    </div>
 						                    </div>
                                         </li>`;
                                 groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
-                                groupTemplate = groupTemplate.replace("{0}",data[x].members[0].displayName)
+                                groupTemplate = groupTemplate.replace("{0}",data[x].channel.name + " : " + data[x].members[0].displayName)
                                 groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
                             
                             $("div.body-section div.left-section ul").append(groupTemplate)
