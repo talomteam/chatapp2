@@ -96,13 +96,14 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 dbmessages.insert({"groupId":groupId,"messages":[messageEvent]})
                 
                 bot.getProfile(messageEvent.source.userId).then(function(data) {
+                    console.log(data)
                     dbrooms.update({"groupId":groupId},{$push:{"members":data}});
                     io.sockets.emit('messageinroom',messageEvent)
                 }).catch(function(error) {
                     io.sockets.emit('messageinroom',messageEvent)
                 });
 
-                
+
             }else{
                 console.log('exits')
                 dbmessages.update({"groupId":groupId},{$push:{"messages":messageEvent}});
