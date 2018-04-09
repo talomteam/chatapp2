@@ -208,7 +208,7 @@
                 });
                 socket.on('firstmessageinroom', function(data){
                    //$("div.right-section div.message ul li").remove()
-                   if (current_groupId == data.groupId)
+                   if (current_groupId == data[0].groupId)
                    {    
                         for(var x = 0;x < data.messages.length;x++)
                         {
