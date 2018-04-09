@@ -43,9 +43,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             
             var source = {userId:"cccxxsfdsfdsfsf",type:"agent"};
             var msg = {type:"text",text:data.message};
-            var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupdId:data.groupId};
+            var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupdId:data.groupId,message:msg};
             
-
+            console.log(replyMessage);
             dbmessages.update({"groupId":data.groupdId},{$push:{"messages":replyMessage}});
             socket.emit('messageinroom',replyMessage);
             console.log(data);
