@@ -69,30 +69,26 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
 
     bot.pushTextMessage(groupdId, 'รับทราบ ++');
     if (groupdId != ''){
-        room_count = dbrooms.find({"groupId":groupdId}).count()
-
         messageType = message.getMessageType();
         messageId = message.getMessageId();
         messageEvent = message.getEvent();
         messageEvent["method"] = "received";
         messageEvent["groupId"] = groupdId;
-        console.log(messageEvent);
-        console.log(room_count);
-        if (room_count == 0){
-            console.log('new..')
-            dbrooms.insert({"groupId:":groupdId, "channel":{"name":"LINE@","type":groupType,"members":[]}})
-            dbmessages.insert({"groupId":groupdId,"messages":[messageEvent]})
-            io.sockets.emit('messageinroom',messageEvent)
-        }else{
-            console.log('exits')
-            dbmessages.update({"groupdId":groupdId},{$push:{"messages":messageEvent}});
-            io.sockets.emit('messageinroom',messageEvent);
-        }
-        
+        dbrooms.count({"groupId":groupdId},function(err,room_count){
+            if (room_count === 0){
+                console.log('new..')
+                dbrooms.insert({"groupId:":groupdId, "channel":{"name":"LINE@","type":groupType,"members":[]}})
+                dbmessages.insert({"groupId":groupdId,"messages":[messageEvent]})
+                io.sockets.emit('messageinroom',messageEvent)
+            }else{
+                console.log('exits')
+                dbmessages.update({"groupdId":groupdId},{$push:{"messages":messageEvent}});
+                io.sockets.emit('messageinroom',messageEvent);
+            }
+        })
     }
-    
-  });
-   
+ 
+    });
 });
 
 
