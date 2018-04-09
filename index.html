@@ -101,7 +101,7 @@
                         $(this).removeClass("active")
                     });
                     $(this).addClass("active")
-                    name = $(this).find("div.desc small").text()
+                    name = $(this).find("div.desc small:first").text()
                     $("div.headRight-section div.headRight-sub h3").text(name)
 
                     type = $(this).find("div.desc small:last").text()
