@@ -100,7 +100,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                     dbrooms.update({"groupId":groupId},{$push:{"members":data}});
                     roomDetail["channel"]["members"].push(data) 
                     io.sockets.emit('messageinroom',messageEvent)
-                    io.sockets.emit('rooms',roomDetail)
+                    io.sockets.emit('rooms',[roomDetail])
                     
                 });
 
