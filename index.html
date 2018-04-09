@@ -113,8 +113,17 @@
             var socket = io.connect('http://139.59.119.205:4200');
             // Check for connection
             if(socket !== undefined){
-                console.log('Connected to socket...');
+                
                 // Handle Output
+                socket.on('connect',function()
+                {
+                    console.log('Connected to socket...');
+                    socket.on('disconect',function()
+                    {
+                        console.log('DisConnected to socket...');               
+                    });
+                });
+                
                 socket.on('rooms', function(data){
                     console.log(data);
                     if(data.length){
@@ -202,7 +211,7 @@
                                             </div>
                                         </li>`
                             groupTemplate = groupTemplate.replace("{0}",data.message.text)  
-                            groupTemplate = groupTemplate.replace("{1}","")
+                            groupTemplate = groupTemplate.replace("{1}",data.timestamp)
                             $("div.right-section div.message ul").append(groupTemplate)
                        }
                    }
@@ -230,7 +239,7 @@
                                                     </div>
                                                 </li>`
                                     groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.text)  
-                                    groupTemplate = groupTemplate.replace("{1}","")
+                                    groupTemplate = groupTemplate.replace("{1}",msg.messages[x].timestamp)
                                     $("div.right-section div.message ul").append(groupTemplate)
                             }
                             else
@@ -245,7 +254,7 @@
                                                     </div>
                                                 </li>`
                                     groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.text)  
-                                    groupTemplate = groupTemplate.replace("{1}","")
+                                    groupTemplate = groupTemplate.replace("{1}",msg.messages[x].timestamp)
                                     $("div.right-section div.message ul").append(groupTemplate)
                             }
                         }
