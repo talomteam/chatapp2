@@ -190,7 +190,18 @@
                        }
                        else
                        {
-
+                        var groupTemplate = ` <li class="msg-right">
+                                            <div class="msg-left-sub">
+                                                <img src="image/man03.png">
+                                                <div class="msg-desc">
+                                                    {0}
+                                                </div>
+                                                <small>{1}</small>
+                                            </div>
+                                        </li>`
+                            groupTemplate = groupTemplate.replace("{0}",data.message.text)  
+                            groupTemplate = groupTemplate.replace("{1}","")
+                            $("div.right-section div.message ul").append(groupTemplate)
                        }
                    }
                    console.log(data)

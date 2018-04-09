@@ -43,7 +43,13 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         });
         socket.on('getmessageinroom',function(data){
             console.log('getmessageinroom')
-            console.log(data);
+            dbmessages.find({"groupdId":data.getGroupId},function(err,res){
+                //console.log(res)
+                if (err){
+                    throw err
+                }
+                socket.emit('messageinroom',res)
+            });
         });
    });
    bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
