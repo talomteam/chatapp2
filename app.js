@@ -72,7 +72,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         groupType = 'Room' ;
     }
     
-    bot.pushTextMessage(groupdId, 'รับทราบ ++');
+    //bot.pushTextMessage(groupdId, 'รับทราบ ++');
     if (groupdId != ''){
         messageType = message.getMessageType();
         messageId = message.getMessageId();
