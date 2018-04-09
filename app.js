@@ -43,10 +43,10 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             
             var source = {userId:"cccxxsfdsfdsfsf",type:"agent"};
             var msg = {type:"text",text:data.message};
-            var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupdId:data.groupId,message:msg};
+            var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupId:data.groupId,message:msg};
             
             console.log(replyMessage);
-            dbmessages.update({"groupId":data.groupdId},{$push:{"messages":replyMessage}});
+            dbmessages.update({"groupId":data.groupId},{$push:{"messages":replyMessage}});
             socket.emit('messageinroom',replyMessage);
             console.log(data);
         });
@@ -67,16 +67,16 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     console.log("isUserEvent : "+ message.isUserEvent());
     console.log("isGroupEvent : "+ message.isGroupEvent());
     console.log("isRoomEvent : "+ message.isRoomEvent());
-    var groupdId = '';
+    var groupId = '';
     var groupType = '' ;
     if(message.isUserEvent()){
-        groupdId = message.getUserId();
+        groupId = message.getUserId();
         groupType = 'User' ;
     }else if (message.isGroupEvent()){
-        groupdId = message.getGroupId()
+        groupId = message.getGroupId()
         groupType = 'Group' ;
     }else if (message.isRoomEvent()){
-        groupdId = message.getRoomId();
+        groupId = message.getRoomId();
         groupType = 'Room' ;
     }
     
@@ -86,17 +86,17 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         messageId = message.getMessageId();
         messageEvent = message.getEvent();
         messageEvent["method"] = "received";
-        messageEvent["groupId"] = groupdId;
+        messageEvent["groupId"] = groupId;
         console.log(messageEvent)
-        dbrooms.count({"groupId":groupdId},function(err,room_count){
+        dbrooms.count({"groupId":groupId},function(err,room_count){
             if (room_count === 0){
                 console.log('new..')
-                dbrooms.insert({"groupId":groupdId, "channel":{"name":"LINE@","type":groupType,"members":[]}})
-                dbmessages.insert({"groupId":groupdId,"messages":[messageEvent]})
+                dbrooms.insert({"groupId":groupId, "channel":{"name":"LINE@","type":groupType,"members":[]}})
+                dbmessages.insert({"groupId":groupId,"messages":[messageEvent]})
                 io.sockets.emit('messageinroom',messageEvent)
             }else{
                 console.log('exits')
-                dbmessages.update({"groupId":groupdId},{$push:{"messages":messageEvent}});
+                dbmessages.update({"groupId":groupId},{$push:{"messages":messageEvent}});
                 io.sockets.emit('messageinroom',messageEvent);
             }
         })
