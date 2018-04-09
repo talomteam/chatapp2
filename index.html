@@ -171,7 +171,7 @@
              
                 socket.on('messageinroom', function(data){
                    //$("div.right-section div.message ul li").remove()
-
+                   console.log("messageinroom")
                    if (current_groupId == data.groupId)
                    {
                        if (data.method == 'received')
