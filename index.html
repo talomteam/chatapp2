@@ -163,6 +163,7 @@
                                 {
                                     displayName.push(data[x].channel.members[y].displayName);
                                 }
+                                console.log(displayName);
                                 groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
                                 groupTemplate = groupTemplate.replace("{0}",displayName.join(","))
                                 groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
