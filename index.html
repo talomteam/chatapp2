@@ -227,7 +227,7 @@
                             $("div.right-section div.message ul").append(groupTemplate)
                        }
                    }
-                   $("div.right-section div.mCustomScrollbar").scrollTop = $("div.right-section div.mCustomScrollbar").scrollHeight;
+                   $("div.right-section div.message").mCustomScrollbar("scrollTo","bottom");
                    console.log(data)
                 });
                 socket.on('firstmessageinroom', function(data){
@@ -270,7 +270,7 @@
                                     $("div.right-section div.message ul").append(groupTemplate)
                             }
                         }
-                        $("div.right-section div.mCustomScrollbar").scrollTop = $("div.right-section div.mCustomScrollbar").scrollHeight;
+                        $("div.right-section div.message").mCustomScrollbar("scrollTo","bottom");
                         console.log(data)
                     }
                         
