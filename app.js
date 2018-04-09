@@ -53,7 +53,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         socket.on('getmessageinroom',function(data){
             console.log('getmessageinroom')
             console.log(data)
-            dbmessages.find({"groupId":data.groupId}).toArray(function(err,res){
+            dbmessages.find({"groupId":data.groupId}).limit(100).toArray(function(err,res){
                 //console.log(res)
                 if (err){
                     throw err
@@ -91,9 +91,18 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         dbrooms.count({"groupId":groupId},function(err,room_count){
             if (room_count === 0){
                 console.log('new..')
+                
                 dbrooms.insert({"groupId":groupId, "channel":{"name":"LINE@","type":groupType,"members":[]}})
                 dbmessages.insert({"groupId":groupId,"messages":[messageEvent]})
-                io.sockets.emit('messageinroom',messageEvent)
+                
+                bot.getProfile(messageEvent.source.userId).then(function(data) {
+                    dbrooms.update({"groupId":groupId},{$push:{"members":data}});
+                    io.sockets.emit('messageinroom',messageEvent)
+                }).catch(function(error) {
+                    io.sockets.emit('messageinroom',messageEvent)
+                });
+
+                
             }else{
                 console.log('exits')
                 dbmessages.update({"groupId":groupId},{$push:{"messages":messageEvent}});
