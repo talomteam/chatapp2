@@ -98,7 +98,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 bot.getProfile(messageEvent.source.userId).then(function(data) {
                     console.log(data)
                     dbrooms.update({"groupId":groupId},{$push:{"members":data}});
-                    roomDetail["members"] = data 
+                    roomDetail["channel"]["members"].push(data) 
                     io.sockets.emit('messageinroom',messageEvent)
                     io.sockets.emit('rooms',roomDetail)
                     
