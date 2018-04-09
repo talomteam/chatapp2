@@ -158,8 +158,13 @@
 							                    </div>
 						                    </div>
                                         </li>`;
+                                var displayName = [];
+                                for (var y = 0;y < data[x].channel.members;y++)
+                                {
+                                    displayName.push(data[x].channel.members[y].displayName);
+                                }
                                 groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
-                                groupTemplate = groupTemplate.replace("{0}",data[x].channel.members[0].displayName)
+                                groupTemplate = groupTemplate.replace("{0}",displayName.join(","))
                                 groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
                             
                             $("div.body-section div.left-section ul").append(groupTemplate)

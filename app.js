@@ -108,6 +108,20 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
 
             }else{
                 console.log('exits')
+                var userId = messageEvent.source.userId;
+                dbrooms.count({"groupId":groupId,"channel.members.userId":userId},function(err,member_count){
+                    if (member_count == 0)
+                    {
+                        bot.getProfile(userId).then(function(data) {
+                        dbrooms.update({"groupId":groupId},{$push:{"channel.members":data}});
+                        //roomDetail["channel"]["members"].push(data) 
+                        io.sockets.emit('messageinroom',messageEvent)
+                        //io.sockets.emit('rooms',[roomDetail])
+                    
+                        });
+                    }
+                });
+                
                 dbmessages.update({"groupId":groupId},{$push:{"messages":messageEvent}});
                 io.sockets.emit('messageinroom',messageEvent);
             }
