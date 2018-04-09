@@ -99,11 +99,12 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                     console.log(data)
                     dbrooms.update({"groupId":groupId},{$push:{"members":data}});
                     roomDetail["members"].push(data)
+
                     io.sockets.emit('messageinroom',messageEvent)
-                    io.sockets.emit('rooms',[roomDetail])
+                    io.sockets.emit('rooms',[]=roomDetail)
                 }).catch(function(error) {
                     io.sockets.emit('messageinroom',messageEvent)
-                    io.sockets.emit('rooms',[roomDetail])
+                    io.sockets.emit('rooms',[]=roomDetail)
                 });
                 
 
