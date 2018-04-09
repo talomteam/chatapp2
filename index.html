@@ -227,7 +227,7 @@
                             $("div.right-section div.message ul").append(groupTemplate)
                        }
                    }
-                   $("div.message").scrollTop = $("div.message").scrollHeigh;
+                   $("div.right-section").scrollTop = $("div.right-section").scrollHeight;
                    console.log(data)
                 });
                 socket.on('firstmessageinroom', function(data){
@@ -270,7 +270,7 @@
                                     $("div.right-section div.message ul").append(groupTemplate)
                             }
                         }
-                        $("div.message").scrollTop = $("div.message").scrollHeigh;
+                        $("div.right-section").scrollTop = $("div.right-section").scrollHeight;
                         console.log(data)
                     }
                         
