@@ -30,6 +30,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
    var messages = db.collection('messages')
    io.on('connection',function(socket){
         rooms.find().limit(100).sort({_id:1}).toArray(function(err,res){
+            console.log(res)
             if (err){
                 throw err
             }
@@ -73,16 +74,17 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         messageId = message.getMessageId();
         messageEvent = message.getEvent();
         messageEvent["method"] = "received";
+        messageEvent["groupId"] = groupdId;
         console.log(messageEvent);
         if (room_count == 0){
             console.log('new..')
             rooms.insert({"groupId:":groupdId, "channnel":{"name":"LINE@","type":groupType,"members":[]}})
             messages.insert({"groupId":groupdId,"messages":[messageEvent]})
-            io.sockets.emit('messageinroom','')
+            io.sockets.emit('messageinroom',messageEvent)
         }else{
             console.log('exits')
             messages.update({"groupdId":groupdId},{$push:{"messages":messageEvent}});
-            io.sockets.emit('messageinroom','')
+            io.sockets.emit('messageinroom',messageEvent);
         }
         
     }
