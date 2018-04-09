@@ -77,7 +77,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         dbrooms.count({"groupId":groupdId},function(err,room_count){
             if (room_count === 0){
                 console.log('new..')
-                dbrooms.insert({"groupId:":groupdId, "channel":{"name":"LINE@","type":groupType,"members":[]}})
+                dbrooms.insert({"groupId":groupdId, "channel":{"name":"LINE@","type":groupType,"members":[]}})
                 dbmessages.insert({"groupId":groupdId,"messages":[messageEvent]})
                 io.sockets.emit('messageinroom',messageEvent)
             }else{
