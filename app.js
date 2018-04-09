@@ -87,7 +87,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 io.sockets.emit('messageinroom',messageEvent)
             }else{
                 console.log('exits')
-                dbmessages.update({"groupdId":groupdId},{$push:{"messages":messageEvent}});
+                dbmessages.update({"groupId":groupdId},{$push:{"messages":messageEvent}});
                 io.sockets.emit('messageinroom',messageEvent);
             }
         })
