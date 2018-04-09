@@ -39,6 +39,11 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         });
         socket.on('reply',function(data){
             console.log('reply')
+            bot.replyTextMessage(data.groupId, data.message).then(function(data) {
+                // add your code when success.
+              }).catch(function(error) {
+                // add your code when error.
+              });
             console.log(data);
         });
         socket.on('getmessageinroom',function(data){
