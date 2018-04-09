@@ -115,12 +115,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                     if (member_count === 0)
                     {
                         bot.getProfile(userId).then(function(data) {
-                        console.log(data)
-                        dbrooms.update({"groupId":groupId},{$push:{"channel.members":data}});
-                        //roomDetail["channel"]["members"].push(data) 
-                        io.sockets.emit('messageinroom',messageEvent)
-                        //io.sockets.emit('rooms',[roomDetail])
-                    
+                            console.log(data)
+                            //dbrooms.update({"groupId":groupId},{$push:{"channel.members":data}});
+                            //io.sockets.emit('messageinroom',messageEvent)
                         });
                     }
                 });
