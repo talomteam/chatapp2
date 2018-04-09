@@ -208,13 +208,14 @@
                 });
                 socket.on('firstmessageinroom', function(data){
                    //$("div.right-section div.message ul li").remove()
-                   console.log(data[0].groupId)
+                   
                    if (current_groupId == data[0].groupId)
-                   {    console.log(data[0].groupId)
-                        for(var x = 0;x < data.messages.length;x++)
+                   {    
+                       msg = data[0]
+                        for(var x = 0;x < msg.messages.length;x++)
                         {
-                            console.log(data.messages[x].message.text)
-                            if (data.messages[x].method == 'received')
+                            console.log(msg.messages[x].message.text)
+                            if (msg.messages[x].method == 'received')
                             {
                                     var groupTemplate = ` <li class="msg-left">
                                                     <div class="msg-left-sub">
@@ -225,7 +226,7 @@
                                                         <small>{1}</small>
                                                     </div>
                                                 </li>`
-                                    groupTemplate = groupTemplate.replace("{0}",data.messages[x].message.text)  
+                                    groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.text)  
                                     groupTemplate = groupTemplate.replace("{1}","")
                                     $("div.right-section div.message ul").append(groupTemplate)
                             }
@@ -240,7 +241,7 @@
                                                         <small>{1}</small>
                                                     </div>
                                                 </li>`
-                                    groupTemplate = groupTemplate.replace("{0}",data.messages[x].message.text)  
+                                    groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.text)  
                                     groupTemplate = groupTemplate.replace("{1}","")
                                     $("div.right-section div.message ul").append(groupTemplate)
                             }
