@@ -101,14 +101,15 @@
                         $(this).removeClass("active")
                     });
                     $(this).addClass("active")
-                    room = $(this).find("div.desc small:first").text()
+                    room = $(this).find("div.desc small:first-child").text()
+
                     displayName = (this).find("div.desc h5").text()
                     $("div.headRight-section div.headRight-sub h3").text(name)
 
                     type = $(this).find("div.desc small:last").text()
                     $("div.headRight-section div.headRight-sub small:last").text(type)
 
-                    current_groupId = name
+                    current_groupId = room
                     current_type = type
                     if (current_groupId !='' ){
                         socket.emit('getmessageinroom',{
