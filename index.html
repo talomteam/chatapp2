@@ -206,6 +206,48 @@
                    }
                    console.log(data)
                 });
+                socket.on('firstmessageinroom', function(data){
+                   //$("div.right-section div.message ul li").remove()
+                   if (current_groupId == data.groupId)
+                   {    
+                        for(var x = 0;x < data.messages.length;x++)
+                        {
+                            if (data.method == 'received')
+                            {
+                                    var groupTemplate = ` <li class="msg-left">
+                                                    <div class="msg-left-sub">
+                                                        <img src="image/man03.png">
+                                                        <div class="msg-desc">
+                                                            {0}
+                                                        </div>
+                                                        <small>{1}</small>
+                                                    </div>
+                                                </li>`
+                                    groupTemplate = groupTemplate.replace("{0}",data.messages[x].message.text)  
+                                    groupTemplate = groupTemplate.replace("{1}","")
+                                    $("div.right-section div.message ul").append(groupTemplate)
+                            }
+                            else
+                            {
+                                var groupTemplate = ` <li class="msg-right">
+                                                    <div class="msg-left-sub">
+                                                        <img src="image/man03.png">
+                                                        <div class="msg-desc">
+                                                            {0}
+                                                        </div>
+                                                        <small>{1}</small>
+                                                    </div>
+                                                </li>`
+                                    groupTemplate = groupTemplate.replace("{0}",data.messages[x].message.text)  
+                                    groupTemplate = groupTemplate.replace("{1}","")
+                                    $("div.right-section div.message ul").append(groupTemplate)
+                            }
+                        }
+                        console.log(data)
+                    }
+                        
+                       
+                });
                 
             }
         })();
