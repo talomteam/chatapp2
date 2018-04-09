@@ -29,6 +29,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
    var rooms =  db.collection('rooms');
    var messages = db.collection('messages')
    io.on('connection',function(socket){
+       console.log("client connect")
         rooms.find().limit(100).sort({_id:1}).toArray(function(err,res){
             console.log(res)
             if (err){
