@@ -101,7 +101,7 @@
                         $(this).removeClass("active")
                     });
                     $(this).addClass("active")
-                    name = $(this).find("div.desc h5").text()
+                    name = $(this).find("div.desc small").text()
                     $("div.headRight-section div.headRight-sub h3").text(name)
 
                     type = $(this).find("div.desc small:last").text()
@@ -149,12 +149,14 @@
 							                    <div class="desc">
 								                    <small class="time"></small>
 								                    <h5>{0}</h5>
-								                    <small>{1}</small>
+                                                    <small>{1}</small>
+                                                    <small>{2}</small>
 							                    </div>
 						                    </div>
                                         </li>`;
-                                groupTemplate = groupTemplate.replace("{0}",data[x].groupId)
-                                groupTemplate = groupTemplate.replace("{1}",data[x].channel.name)
+                                groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
+                                groupTemplate = groupTemplate.replace("{0}",data[x].members[0].displayName)
+                                groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
                             
                             $("div.body-section div.left-section ul").append(groupTemplate)
                           
