@@ -171,6 +171,7 @@
              
                 socket.on('messageinroom', function(data){
                    //$("div.right-section div.message ul li").remove()
+
                    if (current_groupId == data.groupId)
                    {
                        if (data.method == 'received')
@@ -190,6 +191,7 @@
                        }
                        else
                        {
+                        console.log("send")
                         var groupTemplate = ` <li class="msg-right">
                                             <div class="msg-left-sub">
                                                 <img src="image/man03.png">
