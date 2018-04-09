@@ -212,7 +212,8 @@
                    {    
                         for(var x = 0;x < data.messages.length;x++)
                         {
-                            if (data.method == 'received')
+                            console.log(data.messages[x].message.text)
+                            if (data.messages[x].method == 'received')
                             {
                                     var groupTemplate = ` <li class="msg-left">
                                                     <div class="msg-left-sub">
