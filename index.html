@@ -159,7 +159,7 @@
 						                    </div>
                                         </li>`;
                                 groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
-                                groupTemplate = groupTemplate.replace("{0}",data[x].members[0].displayName)
+                                groupTemplate = groupTemplate.replace("{0}",data[x].channel.members[0].displayName)
                                 groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
                             
                             $("div.body-section div.left-section ul").append(groupTemplate)
