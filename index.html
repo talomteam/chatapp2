@@ -81,7 +81,16 @@
 	<!-- custom scrollbar plugin -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script>
-      
+      function formatDate(date) {
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            var strTime = hours + ':' + minutes + ' ' + ampm;
+            return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+        }
         (function(){
             var current_groupId = '';
             var current_type = '';
@@ -196,7 +205,7 @@
                                             </div>
                                         </li>`
                             groupTemplate = groupTemplate.replace("{0}",data.message.text)  
-                            groupTemplate = groupTemplate.replace("{1}","")
+                            groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
                             $("div.right-section div.message ul").append(groupTemplate)
                        }
                        else
@@ -212,7 +221,7 @@
                                             </div>
                                         </li>`
                             groupTemplate = groupTemplate.replace("{0}",data.message.text)  
-                            groupTemplate = groupTemplate.replace("{1}",data.timestamp)
+                            groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
                             $("div.right-section div.message ul").append(groupTemplate)
                        }
                    }
@@ -240,7 +249,7 @@
                                                     </div>
                                                 </li>`
                                     groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.text)  
-                                    groupTemplate = groupTemplate.replace("{1}",msg.messages[x].timestamp)
+                                    groupTemplate = groupTemplate.replace("{1}",formatDate(msg.messages[x].timestamp))
                                     $("div.right-section div.message ul").append(groupTemplate)
                             }
                             else
@@ -255,7 +264,7 @@
                                                     </div>
                                                 </li>`
                                     groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.text)  
-                                    groupTemplate = groupTemplate.replace("{1}",msg.messages[x].timestamp)
+                                    groupTemplate = groupTemplate.replace("{1}",formatDate(msg.messages[x].timestamp))
                                     $("div.right-section div.message ul").append(groupTemplate)
                             }
                         }
