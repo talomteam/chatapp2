@@ -91,17 +91,22 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         dbrooms.count({"groupId":groupId},function(err,room_count){
             if (room_count === 0){
                 console.log('new..')
-                
-                dbrooms.insert({"groupId":groupId, "channel":{"name":"LINE@","type":groupType,"members":[]}})
+                roomDetail = {"groupId":groupId, "channel":{"name":"LINE@","type":groupType,"members":[]}}
+                dbrooms.insert(roomDetail)
                 dbmessages.insert({"groupId":groupId,"messages":[messageEvent]})
                 
                 bot.getProfile(messageEvent.source.userId).then(function(data) {
                     console.log(data)
                     dbrooms.update({"groupId":groupId},{$push:{"members":data}});
+                    roomDetail["members"].push(roomDetail)
                     io.sockets.emit('messageinroom',messageEvent)
+                    io.sockets.emit('rooms',roomDetail)
                 }).catch(function(error) {
                     io.sockets.emit('messageinroom',messageEvent)
+                    io.sockets.emit('rooms',roomDetail)
                 });
+                
+
 
 
             }else{
