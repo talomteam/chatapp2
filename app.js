@@ -41,7 +41,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             console.log('reply')
             bot.pushTextMessage(data.groupId, data.message);
             
-            var source,msg,replyMessage = [];
+            var source,msg,replyMessage = {};
             source["userId"] = "cccxxsfdsfdsfsf";
             source["type"] = "agent";
 
