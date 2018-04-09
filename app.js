@@ -49,7 +49,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 if (err){
                     throw err
                 }
-                socket.emit('messageinroom',res)
+                socket.emit('firstmessageinroom',res)
             });
         });
    });
