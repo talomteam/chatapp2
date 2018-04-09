@@ -157,6 +157,7 @@
                                 groupTemplate = groupTemplate.replace("{1}",data[x].channel.name)
                             
                             $("div.body-section div.left-section ul").append(groupTemplate)
+                          
                         }
                         setonclickroom()
                     }
@@ -226,7 +227,7 @@
                             $("div.right-section div.message ul").append(groupTemplate)
                        }
                    }
-                   $("div.right-section").offset().top
+                   $("div.message").scrollTop = $("div.message").scrollHeigh;
                    console.log(data)
                 });
                 socket.on('firstmessageinroom', function(data){
@@ -269,7 +270,7 @@
                                     $("div.right-section div.message ul").append(groupTemplate)
                             }
                         }
-                        $("div.right-section").offset().top
+                        $("div.message").scrollTop = $("div.message").scrollHeigh;
                         console.log(data)
                     }
                         
