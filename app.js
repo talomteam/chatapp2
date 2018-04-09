@@ -43,7 +43,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         });
         socket.on('getmessageinroom',function(data){
             console.log('getmessageinroom')
-            dbmessages.find({"groupdId":data.getGroupId},function(err,res){
+            dbmessages.find({"groupdId":data.groupId},function(err,res){
                 //console.log(res)
                 if (err){
                     throw err
