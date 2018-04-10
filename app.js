@@ -84,7 +84,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         });
         socket.on('evaluation',function(data)
         {
-            var actions = [
+            /* var actions = [
                 new MessageTemplateAction('Satisfied', 'Satisfied'),
                 new MessageTemplateAction('Dissatisfied ', 'Dissatisfied'),
                
@@ -93,7 +93,19 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
               var messageBuilder = new TemplateMessageBuilder('this is a confirm template', confirmTemplate);
               bot.pushMessage(groupId, messageBuilder).then(function() {
                
-              });
+              }); */
+              var actions = [
+                new PostbackTemplateAction('Satisfied', 'https://uxteam.in/chat/?actions=buy&itemid=123'),
+                new PostbackTemplateAction('OK', 'https://uxteam.in/chat/?action=add&itemid=123'),
+                new UriTemplateAction('Dissatisfied', 'https://uxteam.in/chat/?action=add&itemid=124')
+              ];
+              var buttonTemplate = new ButtonTemplateBuilder('Evaluation', 'Evaluation for this service', 'https://uxteam.in/chat/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif', actions);
+              var messageBuilder = new TemplateMessageBuilder('this is a buttons template', buttonTemplate);
+              bot.pushMessage(groupId, messageBuilder).then(function() {
+                console.log("OK")
+              }).catch(function(error) {
+                console.log(error)
+              });;
         });
    });
    bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
@@ -116,18 +128,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     
     //bot.pushTextMessage(groupdId, 'รับทราบ ++');
 
-    var actions = [
-        new PostbackTemplateAction('Satisfied', 'https://uxteam.in/chat/?actions=buy&itemid=123'),
-        new PostbackTemplateAction('OK', 'https://uxteam.in/chat/?action=add&itemid=123'),
-        new UriTemplateAction('Dissatisfied', 'https://uxteam.in/chat/?action=add&itemid=124')
-      ];
-      var buttonTemplate = new ButtonTemplateBuilder('Evaluation', 'Evaluation for this service', 'https://uxteam.in/chat/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif', actions);
-      var messageBuilder = new TemplateMessageBuilder('this is a buttons template', buttonTemplate);
-      bot.pushMessage(groupId, messageBuilder).then(function() {
-        console.log("OK")
-      }).catch(function(error) {
-        console.log(error)
-      });;
+    
      
 
     if (groupId != ''){
