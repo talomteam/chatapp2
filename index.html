@@ -299,9 +299,18 @@
                                                         <small>{1}</small>
                                                     </div>
                                                 </li>`
-                                    groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.text)  
-                                    groupTemplate = groupTemplate.replace("{1}",formatDate(msg.messages[x].timestamp))
-                                    $("div.right-section div.message ul").append(groupTemplate)
+                                    if(msg.messages[x].message.type === 'text')
+                                    {
+                                        groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.text)  
+                                        groupTemplate = groupTemplate.replace("{1}",formatDate(msg.messages[x].timestamp))
+                                        $("div.right-section div.message ul").append(groupTemplate)
+                                    }
+                                    else
+                                    {
+                                        groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.type)  
+                                        groupTemplate = groupTemplate.replace("{1}",formatDate(msg.messages[x].timestamp))
+                                        $("div.right-section div.message ul").append(groupTemplate)
+                                    }
                             }
                             else
                             {
