@@ -103,6 +103,12 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
               var buttonTemplate = new ButtonTemplateBuilder('Evaluation', 'Evaluation for this service', 'https://uxteam.in/chat/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif', actions);
               var messageBuilder = new TemplateMessageBuilder('Evaluate', buttonTemplate);
               bot.pushMessage(data.groupId, messageBuilder).then(function() {
+                var source = {userId:"cccxxsfdsfdsfsf",type:"agent"};
+                var msg = {type:"text","---Evaluate for this service---"};
+                var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupId:data.groupId,message:msg};
+                
+                dbmessages.update({"groupId":data.groupId},{$push:{"messages":replyMessage}});
+                socket.emit('messageinroom',replyMessage);
                 console.log("OK")
               }).catch(function(error) {
                 console.log(error)
