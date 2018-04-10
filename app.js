@@ -82,18 +82,16 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     
     //bot.pushTextMessage(groupdId, 'รับทราบ ++');
 
-    var buttons = new LINEBot.ButtonTemplateBuilder();
-    buttons.setTitle('Evaluation ');
-    buttons.setMessage('Evaluation for this service');
-    buttons.setThumbnail('http://uxteam.in:4200/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif');
-
-    // label, data/url, type
-    buttons.addAction('Very Good', 'action=buy&itemid=123', LINEBot.Action.POSTBACK);
-    buttons.addAction('Good', 'action=buy&itemid=123', LINEBot.Action.POSTBACK);
-    buttons.addAction('Improve', 'http://example.com/page/123', LINEBot.Action.URI);
-    
-    var messageBuilder = new LINEBot.TemplateMessageBuilder('this is a buttons template', buttons);
-    bot.pushMessage(groupId,messageBuilder);
+    var actions = [
+        new PostbackTemplateAction('Buy', 'actions=buy&itemid=123'),
+        new PostbackTemplateAction('Add to cart', 'action=add&itemid=123'),
+        new UriTemplateAction('view detail', 'http://example.com/page/123')
+      ];
+      var buttonTemplate = new ButtonTemplateBuilder('Evaluation', 'Evaluation for this service', 'http://uxteam.in:4200/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif', actions);
+      var messageBuilder = new TemplateMessageBuilder('this is a buttons template', buttonTemplate);
+      bot.pushMessage(groupdId, messageBuilder).then(function() {
+        done();
+      });
 
     if (groupId != ''){
         messageType = message.getMessageType();
