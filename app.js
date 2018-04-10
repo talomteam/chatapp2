@@ -93,6 +93,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     buttons.addAction('Improve', 'http://example.com/page/123', LINEBot.Action.URI);
     var messageBuilder = new LINEBot.TemplateMessageBuilder('this is a buttons template', buttons);
     bot.pushMessage(groupId,messageBuilder);
+    
     if (groupId != ''){
         messageType = message.getMessageType();
         messageId = message.getMessageId();
