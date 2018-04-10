@@ -114,13 +114,14 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         console.log("OK")
       }); */
       var actions = [
-        new MessageTemplateAction('Yes', 'yes'),
-        new MessageTemplateAction('No', 'no')
+        new MessageTemplateAction('Very Good', '%@evaluate:1'),
+        new MessageTemplateAction('Good', '%@evaluate:2'),
+        new MessageTemplateAction('imporve', '%@evaluate:3')
       ];
-      var confirmTemplate = new ConfirmTemplateBuilder('Are you sure', actions);
+      var confirmTemplate = new ConfirmTemplateBuilder('Evaluate for this service', actions);
       var messageBuilder = new TemplateMessageBuilder('this is a confirm template', confirmTemplate);
       bot.pushMessage(groupId, messageBuilder).then(function() {
-        done();
+       
       });
 
     if (groupId != ''){
