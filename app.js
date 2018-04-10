@@ -104,7 +104,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
               var messageBuilder = new TemplateMessageBuilder('Evaluate', buttonTemplate);
               bot.pushMessage(data.groupId, messageBuilder).then(function() {
                 var source = {userId:"cccxxsfdsfdsfsf",type:"agent"};
-                var msg = {type:"text","---Evaluate for this service---"};
+                var msg = {type:"text",text:"---Evaluate for this service---"};
                 var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupId:data.groupId,message:msg};
                 
                 dbmessages.update({"groupId":data.groupId},{$push:{"messages":replyMessage}});
