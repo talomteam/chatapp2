@@ -114,8 +114,8 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         console.log("OK")
       }); */
       var actions = [
-        new MessageTemplateAction('Yes', 'yes'),
-        new MessageTemplateAction('No', 'no'),
+        new MessageTemplateAction('Satisfied', 'Satisfied'),
+        new MessageTemplateAction('Dissatisfied ', 'Dissatisfied'),
        
       ];
       var confirmTemplate = new ConfirmTemplateBuilder('Evaluate for this service', actions);
