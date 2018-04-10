@@ -117,9 +117,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     //bot.pushTextMessage(groupdId, 'รับทราบ ++');
 
     var actions = [
-        new PostbackTemplateAction('Buy', 'https://uxteam.in/chat/?actions=buy&itemid=123'),
-        new PostbackTemplateAction('Add to cart', 'https://uxteam.in/chat/?action=add&itemid=123'),
-        new UriTemplateAction('view detail', 'https://uxteam.in/chat/?action=add&itemid=124')
+        new PostbackTemplateAction('Satisfied', 'https://uxteam.in/chat/?actions=buy&itemid=123'),
+        new PostbackTemplateAction('OK', 'https://uxteam.in/chat/?action=add&itemid=123'),
+        new UriTemplateAction('Dissatisfied', 'https://uxteam.in/chat/?action=add&itemid=124')
       ];
       var buttonTemplate = new ButtonTemplateBuilder('Evaluation', 'Evaluation for this service', 'https://uxteam.in/chat/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif', actions);
       var messageBuilder = new TemplateMessageBuilder('this is a buttons template', buttonTemplate);
