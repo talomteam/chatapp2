@@ -240,6 +240,12 @@
                                 groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
                                 $("div.right-section div.message ul").append(groupTemplate)
                             }
+                            else
+                            {
+                                groupTemplate = groupTemplate.replace("{0}",data.message.type) 
+                                groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
+                                $("div.right-section div.message ul").append(groupTemplate)
+                            }
                            
                             
                        }
@@ -258,6 +264,12 @@
                             if(data.message.type === 'text')
                             {
                                 groupTemplate = groupTemplate.replace("{0}",data.message.text)  
+                                groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
+                                $("div.right-section div.message ul").append(groupTemplate)
+                            }
+                            else
+                            {
+                                groupTemplate = groupTemplate.replace("{0}",data.message.type) 
                                 groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
                                 $("div.right-section div.message ul").append(groupTemplate)
                             }
