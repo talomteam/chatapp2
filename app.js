@@ -4,6 +4,27 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
 var LINEBot = require('line-messaging');
+var TextMessageBuilder = LINEBot.TextMessageBuilder;
+var ImageMessageBuilder = LINEBot.ImageMessageBuilder;
+
+// Imagemap
+var ImagemapMessageBuilder = LINEBot.ImagemapMessageBuilder;
+var ImagemapBaseSize = LINEBot.ImagemapBaseSize;
+var ImagemapArea = LINEBot.ImagemapArea;
+var ImagemapMessageAction = LINEBot.ImagemapMessageAction;
+var ImagemapUriAction = LINEBot.ImagemapUriAction;
+
+// Template
+var TemplateMessageBuilder = LINEBot.TemplateMessageBuilder;
+var ButtonTemplateBuilder = LINEBot.ButtonTemplateBuilder;
+var ConfirmTemplateBuilder = LINEBot.ConfirmTemplateBuilder;
+var CarouselColumnTemplateBuilder = LINEBot.CarouselColumnTemplateBuilder;
+var CarouselTemplateBuilder = LINEBot.CarouselTemplateBuilder;
+var MessageTemplateAction = LINEBot.MessageTemplateAction;
+var PostbackTemplateAction = LINEBot.PostbackTemplateAction;
+var UriTemplateAction = LINEBot.UriTemplateAction;
+
+var MultiMessageBuilder = LINEBot.MultiMessageBuilder;
 
 var mongo = require('mongodb').MongoClient;
 var bot = LINEBot.Client({
