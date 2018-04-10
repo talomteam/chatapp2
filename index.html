@@ -182,8 +182,10 @@
                 });
                 $("button.btn-evaluate").click(function(event)
                     {
-                        socket.emit('evaluation',{});
+                        socket.emit('evaluation',{groupId: current_groupId});
+                        event.preventDefault();
                     }
+                   
                 );
                 $("button.btn-send").click(function(event){
                     var message = $("input#message").val()
