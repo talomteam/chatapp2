@@ -111,7 +111,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
       var buttonTemplate = new ButtonTemplateBuilder('Evaluation', 'Evaluation for this service', 'http://uxteam.in:4200/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif', actions);
       var messageBuilder = new TemplateMessageBuilder('this is a buttons template', buttonTemplate);
       bot.pushMessage(groupId, messageBuilder).then(function() {
-        done();
+        console.log("OK")
       });
 
     if (groupId != ''){
