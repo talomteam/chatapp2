@@ -255,9 +255,13 @@
                                                 <small>{1}</small>
                                             </div>
                                         </li>`
-                            groupTemplate = groupTemplate.replace("{0}",data.message.text)  
-                            groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
-                            $("div.right-section div.message ul").append(groupTemplate)
+                            if(data.message.type === 'text')
+                            {
+                                groupTemplate = groupTemplate.replace("{0}",data.message.text)  
+                                groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
+                                $("div.right-section div.message ul").append(groupTemplate)
+                            }
+                            
                        }
                    }
                    $("div.right-section div.message").mCustomScrollbar("scrollTo","bottom");
