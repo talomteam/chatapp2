@@ -264,6 +264,16 @@ body{
 	background: #fff;
 	cursor: pointer;
 }
+.right-section-bottom .btn-evaluate{
+	border:0px;
+	padding: 8px 10px;
+	float: right;
+	margin-right: 30px;
+	color: #009EF7;
+	font-size: 18px;
+	background: #fff;
+	cursor: pointer;
+}
 .upload-btn{
   position: relative;
   overflow: hidden;

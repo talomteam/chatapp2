@@ -70,7 +70,7 @@
 						</div> -->
 						<input type="text" name="message" id="message" placeholder="type here...">
                         <button class="btn-send"><i class="fa fa-send"></i></button>
-                        <button class="btn"><i class="fa fa-thumbs-up"></i></button>
+                        <button class="btn-evaluate"><i class="fa fa-thumbs-up"></i></button>
 					</form>
 				</div>
 			</div>
@@ -180,6 +180,11 @@
                         setonclickroom()
                     }
                 });
+                $("button.btn-evaluate").click(function(event)
+                    {
+                        socket.emit('evaluation',{});
+                    }
+                );
                 $("button.btn-send").click(function(event){
                     var message = $("input#message").val()
                     if (current_groupId !='' && message !='' ){
