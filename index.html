@@ -182,7 +182,10 @@
                 });
                 $("button.btn-evaluate").click(function(event)
                     {
-                        socket.emit('evaluation',{groupId: current_groupId});
+                        socket.emit('evaluation',{
+                            groupId: current_groupId,
+                            type: current_type
+                        });
                         event.preventDefault();
                     }
                    

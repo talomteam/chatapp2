@@ -94,6 +94,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
               bot.pushMessage(groupId, messageBuilder).then(function() {
                
               }); */
+              console.log(data)
               var actions = [
                 new PostbackTemplateAction('Satisfied', 'https://uxteam.in/chat/?actions=buy&itemid=123'),
                 new PostbackTemplateAction('OK', 'https://uxteam.in/chat/?action=add&itemid=123'),
@@ -105,7 +106,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 console.log("OK")
               }).catch(function(error) {
                 console.log(error)
-              });;
+              });
         });
    });
    bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
