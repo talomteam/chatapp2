@@ -81,6 +81,18 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     }
     
     //bot.pushTextMessage(groupdId, 'รับทราบ ++');
+
+    var buttons = new LINEBot.ButtonTemplateBuilder();
+    buttons.setTitle('Evaluation ');
+    buttons.setMessage('Evaluation for this service');
+    buttons.setThumbnail('http://uxteam.in:4200/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif');
+
+    // label, data/url, type
+    buttons.addAction('Very Good', 'action=buy&itemid=123', LINEBot.Action.POSTBACK);
+    buttons.addAction('Good', 'action=buy&itemid=123', LINEBot.Action.POSTBACK);
+    buttons.addAction('Improve', 'http://example.com/page/123', LINEBot.Action.URI);
+
+    bot.pushMessage(groupId,buttons);
     if (groupId != ''){
         messageType = message.getMessageType();
         messageId = message.getMessageId();
@@ -99,11 +111,10 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                     console.log(data)
                     dbrooms.update({"groupId":groupId},{$push:{"channel.members":data}});
                     roomDetail["channel"]["members"].push(data) 
-                    io.sockets.emit('messageinroom',messageEvent)
-                    io.sockets.emit('rooms',[roomDetail])
-                    
+                    io.sockets.emit('rooms',[roomDetail]) 
                 });
-
+                io.sockets.emit('messageinroom',messageEvent)
+                
 
 
             }else{
@@ -112,15 +123,10 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 bot.getProfile(messageEvent.source.userId).then(function(data) {
                     console.log(data)
                     dbrooms.update({"groupId":groupId},{$pull:{"channel.members":{"userId":userId}}});
-
                     dbrooms.update({"groupId":groupId},{$push:{"channel.members":data}});
-                    io.sockets.emit('messageinroom',messageEvent)
-                    dbmessages.update({"groupId":groupId},{$push:{"messages":messageEvent}});
-                    io.sockets.emit('messageinroom',messageEvent);
                 });
-               
-                
-                
+                dbmessages.update({"groupId":groupId},{$push:{"messages":messageEvent}});
+                io.sockets.emit('messageinroom',messageEvent);
             }
         })
     }

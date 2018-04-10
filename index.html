@@ -161,10 +161,14 @@
                                 var displayName = [];
                                 for (var y = 0;y < data[x].channel.members.length;y++)
                                 {
-                                    console.log('name'+data[x].channel.members[y].displayName);
+                                   // console.log('name'+data[x].channel.members[y].displayName);
                                     displayName.push(data[x].channel.members[y].displayName);
                                 }
                                 console.log(displayName);
+                                if (displayName.length > 0)
+                                {
+                                    displayName.push("Unknow")
+                                }
                                 groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
                                 groupTemplate = groupTemplate.replace("{0}",displayName.join(","))
                                 groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
