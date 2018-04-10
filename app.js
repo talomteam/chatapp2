@@ -106,9 +106,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
     var actions = [
         new PostbackTemplateAction('Buy', 'actions=buy&itemid=123'),
         new PostbackTemplateAction('Add to cart', 'action=add&itemid=123'),
-        new UriTemplateAction('view detail', 'http://example.com/page/123')
+        new UriTemplateAction('view detail', 'action=add&itemid=124')
       ];
-      var buttonTemplate = new ButtonTemplateBuilder('Evaluation', 'Evaluation for this service', 'http://uxteam.in:4200/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif', actions);
+      var buttonTemplate = new ButtonTemplateBuilder('Evaluation', 'Evaluation for this service', 'https://uxteam.in:4200/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif', actions);
       var messageBuilder = new TemplateMessageBuilder('this is a buttons template', buttonTemplate);
       bot.pushMessage(groupId, messageBuilder).then(function() {
         console.log("OK")
