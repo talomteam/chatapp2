@@ -115,7 +115,7 @@
                     current_groupId = room
                     current_type = type
                     if (current_groupId !='' ){
-                        socket.emit('getmessageinroom',{
+                        socket.emit('requestMessage',{
                            groupId: current_groupId,
                            type: current_type
                         })
@@ -140,7 +140,7 @@
                     });
                 });
                 
-                socket.on('rooms', function(data){
+                socket.on('pullRoom', function(data){
                     console.log(data);
                     if(data.length){
                         for(var x = 0;x < data.length;x++){
@@ -155,7 +155,6 @@
 								                    <small class="time"></small>
 								                    <h5>{0}</h5>
                                                     <small>{1}</small>
-                                                    
 							                    </div>
 						                    </div>
                                         </li>`;
@@ -173,7 +172,7 @@
                                 groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
                                 groupTemplate = groupTemplate.replace("{0}",displayName.join(","))
                                 groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
-                            
+                              
                             $("div.body-section div.left-section ul").append(groupTemplate)
                           
                         }
@@ -182,7 +181,7 @@
                 });
                 $("button.btn-evaluate").click(function(event)
                     {
-                        socket.emit('evaluation',{
+                        socket.emit('requestEvaluation',{
                             groupId: current_groupId,
                             type: current_type
                         });
@@ -207,7 +206,7 @@
                     var message = $("input#message").val()
                     if (current_groupId !='' && message !='' ){
                         if(event.which === 13 && event.shiftKey == false){
-                            socket.emit('reply',{
+                            socket.emit('replyMessage',{
                             groupId: current_groupId,
                             type: current_type,
                             message: message
@@ -218,14 +217,15 @@
                 });
 
              
-                socket.on('messageinroom', function(data){
+                socket.on('pullMessage', function(data){
                    //$("div.right-section div.message ul li").remove()
-                   console.log("messageinroom")
+                   console.log("pullMessage")
                    if (current_groupId == data.groupId)
                    {
+                        var groupTemplate = "";
                        if (data.method == 'received')
                        {
-                            var groupTemplate = ` <li class="msg-left">
+                            groupTemplate = ` <li class="msg-left" msgId="{2}">
                                             <div class="msg-left-sub">
                                                 <img src="image/man01.png">
                                                 <div class="msg-desc">
@@ -234,25 +234,10 @@
                                                 <small>{1}</small>
                                             </div>
                                         </li>`
-                            if(data.message.type === 'text')
-                            {
-                                groupTemplate = groupTemplate.replace("{0}",data.message.text) 
-                                groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
-                                $("div.right-section div.message ul").append(groupTemplate)
-                            }
-                            else
-                            {
-                                groupTemplate = groupTemplate.replace("{0}",data.message.type) 
-                                groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
-                                $("div.right-section div.message ul").append(groupTemplate)
-                            }
-                           
-                            
-                       }
-                       else
-                       {
-                        console.log("send")
-                        var groupTemplate = ` <li class="msg-right">
+                        }
+                        else
+                        {
+                            groupTemplate = ` <li class="msg-right" msgId="{2}">
                                             <div class="msg-left-sub">
                                                 <img src="image/man03.png">
                                                 <div class="msg-desc">
@@ -261,80 +246,33 @@
                                                 <small>{1}</small>
                                             </div>
                                         </li>`
-                            if(data.message.type === 'text')
-                            {
-                                groupTemplate = groupTemplate.replace("{0}",data.message.text)  
-                                groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
-                                $("div.right-section div.message ul").append(groupTemplate)
-                            }
-                            else
-                            {
-                                groupTemplate = groupTemplate.replace("{0}",data.message.type) 
-                                groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
-                                $("div.right-section div.message ul").append(groupTemplate)
-                            }
-                            
-                       }
-                   }
-                   $("div.right-section div.message").mCustomScrollbar("scrollTo","bottom");
-                   console.log(data)
-                });
-                socket.on('firstmessageinroom', function(data){
-                   //$("div.right-section div.message ul li").remove()
-                   
-                   if (current_groupId == data[0].groupId)
-                   {    
-                       msg = data[0]
-                        for(var x = 0;x < msg.messages.length;x++)
-                        {
-                            console.log(msg.messages[x].message.text)
-                            if (msg.messages[x].method == 'received')
-                            {
-                                    var groupTemplate = ` <li class="msg-left">
-                                                    <div class="msg-left-sub">
-                                                        <img src="image/man01.png">
-                                                        <div class="msg-desc">
-                                                            {0}
-                                                        </div>
-                                                        <small>{1}</small>
-                                                    </div>
-                                                </li>`
-                                    if(msg.messages[x].message.type === 'text')
-                                    {
-                                        groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.text)  
-                                        groupTemplate = groupTemplate.replace("{1}",formatDate(msg.messages[x].timestamp))
-                                        $("div.right-section div.message ul").append(groupTemplate)
-                                    }
-                                    else
-                                    {
-                                        groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.type)  
-                                        groupTemplate = groupTemplate.replace("{1}",formatDate(msg.messages[x].timestamp))
-                                        $("div.right-section div.message ul").append(groupTemplate)
-                                    }
-                            }
-                            else
-                            {
-                                var groupTemplate = ` <li class="msg-right">
-                                                    <div class="msg-left-sub">
-                                                        <img src="image/man03.png">
-                                                        <div class="msg-desc">
-                                                            {0}
-                                                        </div>
-                                                        <small>{1}</small>
-                                                    </div>
-                                                </li>`
-                                    groupTemplate = groupTemplate.replace("{0}",msg.messages[x].message.text)  
-                                    groupTemplate = groupTemplate.replace("{1}",formatDate(msg.messages[x].timestamp))
-                                    $("div.right-section div.message ul").append(groupTemplate)
-                            }
                         }
+                        if(data.message.type === 'text')
+                        {
+                            groupTemplate = groupTemplate.replace("{0}",data.message.text) 
+                        }
+                        else
+                        {
+                            roupTemplate = groupTemplate.replace("{0}",data.message.type)    
+                        }
+                        groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
+                        groupTemplate = groupTemplate.replace("{2}",data.mesage.id)
+
+                        if ($("div.right-section div.message ul li#"+data.message.id).length > 0)
+                        {
+                            $("div.right-section div.message ul li#"+data.message.id).replaceWith(groupTemplate)
+                        }
+                        else
+                        {
+                            $("div.right-section div.message ul").append(groupTemplate)
+                        }
+                       
+
                         $("div.right-section div.message").mCustomScrollbar("scrollTo","bottom");
                         console.log(data)
-                    }
-                        
-                       
-                });
-                
+                   }
+                  
+                }); 
             }
         })();
     </script>

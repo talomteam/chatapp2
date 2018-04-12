@@ -26,6 +26,8 @@ var PostbackTemplateAction = LINEBot.PostbackTemplateAction;
 var UriTemplateAction = LINEBot.UriTemplateAction;
 
 var MultiMessageBuilder = LINEBot.MultiMessageBuilder;
+var uuid = require('node-uuid');
+var ip = require('ip');
 
 var mongo = require('mongodb').MongoClient;
 var bot = LINEBot.Client({
@@ -57,97 +59,88 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             if (err){
                 throw err
             }
-            socket.emit('rooms',res)
+            socket.emit('room',res)
         });
-        socket.on('reply',function(data){
-            console.log('reply')
+        socket.on('replyMessage',function(data){
+            console.log('replyMessage')
             bot.pushTextMessage(data.groupId, data.message);
             
-            var source = {userId:"cccxxsfdsfdsfsf",type:"agent"};
-            var msg = {type:"text",text:data.message};
+            var source = {userId:ip.address(),type:"agent"};
+            var id = uuid.v4()
+            var msg = {type:"text",text:data.message,id:id};
             var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupId:data.groupId,message:msg};
             
-            console.log(replyMessage);
+            /* console.log(replyMessage);
             dbmessages.update({"groupId":data.groupId},{$push:{"messages":replyMessage}});
-            socket.emit('messageinroom',replyMessage);
+            socket.emit('messageinroom',replyMessage); */
+
+            storeMessage(replyMessage)
             console.log(data);
         });
-        socket.on('getmessageinroom',function(data){
-            console.log('getmessageinroom')
+        socket.on('reqestMessage',function(data){
+            console.log('reqestMessage')
             console.log(data)
             dbmessages.find({"groupId":data.groupId}).limit(100).toArray(function(err,res){
                 //console.log(res)
                 if (err){
                     throw err
                 }
-                socket.emit('firstmessageinroom',res)
+                socket.emit('message',res)
             });
         });
-        socket.on('evaluation',function(data)
+        socket.on('reqestEvaluation',function(data)
         {
-            /* var actions = [
-                new MessageTemplateAction('Satisfied', 'Satisfied'),
-                new MessageTemplateAction('Dissatisfied ', 'Dissatisfied'),
-               
-              ];
-              var confirmTemplate = new ConfirmTemplateBuilder('Evaluate for this service', actions);
-              var messageBuilder = new TemplateMessageBuilder('this is a confirm template', confirmTemplate);
-              bot.pushMessage(groupId, messageBuilder).then(function() {
-               
-              }); */
+            
               console.log(data)
               var actions = [
                 new PostbackTemplateAction('Satisfied', 'https://uxteam.in/chat/?actions=buy&itemid=123'),
                 new PostbackTemplateAction('OK', 'https://uxteam.in/chat/?action=add&itemid=123'),
-                new UriTemplateAction('Dissatisfied', 'https://uxteam.in/chat/?action=add&itemid=124')
+                new PostbackTemplateAction('Dissatisfied', 'https://uxteam.in/chat/?action=add&itemid=124')
               ];
               var buttonTemplate = new ButtonTemplateBuilder('Evaluation', 'Evaluation for this service', 'https://uxteam.in/chat/image/6a00e0099631d0883301b8d2b85c78970c-800wi.gif', actions);
               var messageBuilder = new TemplateMessageBuilder('Evaluate', buttonTemplate);
               bot.pushMessage(data.groupId, messageBuilder).then(function() {
-                var source = {userId:"cccxxsfdsfdsfsf",type:"agent"};
-                var msg = {type:"text",text:"---Evaluate for this service---"};
+
+                var source = {userId:ip.address(),type:"agent"};
+                var msg = {type:"text",text:"--- Evaluate for this service ---"};
                 var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupId:data.groupId,message:msg};
                 
-                dbmessages.update({"groupId":data.groupId},{$push:{"messages":replyMessage}});
-                socket.emit('messageinroom',replyMessage);
-                console.log("OK")
+                /* dbmessages.update({"groupId":data.groupId},{$push:{"messages":replyMessage}});
+                socket.emit('messageinroom',replyMessage); */
+
+                storeMessage(replyMessage)
               }).catch(function(error) {
                 console.log(error)
               });
         });
    });
-   bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
-    
-    console.log("isUserEvent : "+ message.isUserEvent());
-    console.log("isGroupEvent : "+ message.isGroupEvent());
-    console.log("isRoomEvent : "+ message.isRoomEvent());
-    var groupId = '';
-    var groupType = '' ;
-    if(message.isUserEvent()){
-        groupId = message.getUserId();
-        groupType = 'User' ;
-    }else if (message.isGroupEvent()){
-        groupId = message.getGroupId()
-        groupType = 'Group' ;
-    }else if (message.isRoomEvent()){
-        groupId = message.getRoomId();
-        groupType = 'Room' ;
-    }
-    
-    if (groupId != ''){
-        
+
+   function prepaireMessage(message)
+   {
+        var groupId = '';
+        var groupType = '' ;
+        if(message.isUserEvent()){
+            groupId = message.getUserId();
+            groupType = 'User' ;
+        }else if (message.isGroupEvent()){
+            groupId = message.getGroupId()
+            groupType = 'Group' ;
+        }else if (message.isRoomEvent()){
+            groupId = message.getRoomId();
+            groupType = 'Room' ;
+        } 
         messageType = message.getMessageType();
-        messageId = message.getMessageId();
         messageEvent = message.getEvent();
         messageEvent["method"] = "received";
         messageEvent["groupId"] = groupId;
-        console.log(messageEvent)
+        messageEvent["groupType"] = groupType;
+
         if (messageType != "text")
         {
             bot.getMessageContent(messageEvent.message.id).then(function(data) {
 
-               var ext = "" ;
-
+                var ext = "" ;
+ 
                 switch(data.response["headers"]["content-type"])
                 {
                     case 'image/jpeg':
@@ -159,9 +152,8 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                     case 'audio/x-m4a':
                         ext = ".m4a";
                         break;
-                    
                 } 
-                //console.log(data.response)
+                 
                 var fn = messageEvent.message.id+ext
                 messageEvent["message"]["url"] = fn;
                 fs.writeFile('./public/downloads/'+fn,data.body,'binary',function(err)
@@ -170,42 +162,52 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                         throw err
                     }
                     console.log("save file ok")
-                })
-              }).catch(function(error) {
-              // add your code when error.
-              console.log(error)
-              });
+                });
+                storeMessage(messageEvent);
+            }).catch(function(error) {
+                console.log("getMessageContent Error")
+                console.log(error)
+            });
+
         }
-        console.log(messageEvent)
-        dbrooms.count({"groupId":groupId},function(err,room_count){
-            if (room_count === 0){
-                console.log('new..')
-                var roomDetail = {"groupId":groupId, "channel":{"name":"LINE@","type":groupType,"members":[]}}
-                dbrooms.insert(roomDetail)
-                dbmessages.insert({"groupId":groupId,"messages":[messageEvent]})
-                
-                bot.getProfile(messageEvent.source.userId).then(function(data) {
-                    //console.log(data.body)
-                    dbrooms.update({"groupId":groupId},{$push:{"channel.members":data}});
-                    roomDetail["channel"]["members"].push(data.body) 
-                    io.sockets.emit('rooms',[roomDetail]) 
-                });
-                io.sockets.emit('messageinroom',messageEvent)
-                
-            }else{
-                console.log('exits')
-                var userId = messageEvent.source.userId;
-                bot.getProfile(messageEvent.source.userId).then(function(data) {
-                    //console.log(data)
-                    dbrooms.update({"groupId":groupId},{$pull:{"channel.members":{"userId":userId}}});
-                    dbrooms.update({"groupId":groupId},{$push:{"channel.members":data.body}});
-                });
-                dbmessages.update({"groupId":groupId},{$push:{"messages":messageEvent}});
-                io.sockets.emit('messageinroom',messageEvent);
-            }
-        })
-    }
- 
+            bot.getProfile(messageEvent.source.userId).then(function(data) {
+                messageEvent["source"]["detail"] = data;
+                storeMessage(messageEvent);
+            }).catch(function(error) {
+                console.log("getProile Error")
+                console.log(error)
+            });
+            storeMessage(messageEvent);
+     
+   }
+   function storeMessage(document)
+   {
+     
+       dbrooms.findOne({"groupId":document.groupId},function(err,result)
+       {
+           if (!result)
+           {
+               var roomDetail = {"groupId":document.groupId, "channel":{"name":"LINE@","type":document.groupType,"members":[]}}
+               dbrooms.insert(roomDetail)
+               broadcast('pullRoom',[roomDetail])
+               
+           }
+           //update member in room
+           if(document.source != "agent")
+           {
+                dbrooms.update({"groupId":document.groupId,"channel.members.userId":document.detail.userId},{$push:{"channel.members":document.detail}});
+           }
+            //update message
+            dbmessages.update({"groupId":document.groupId,"message.id":document.message.id},{"messages":[document]},{upsert:true})
+            broadcast('pullMessage',[document])
+       })
+   }
+   function broadcast(eventHook,messageEvent)
+   {
+        io.sockets.emit(eventHook,messageEvent);
+   }
+    bot.on(LINEBot.Events.MESSAGE, function(replyToken, message) {
+        prepaireMessage(message)
     });
 });
 
