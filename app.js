@@ -139,12 +139,13 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
      
 
     if (groupId != ''){
+        console.log(messageEvent)
         messageType = message.getMessageType();
         messageId = message.getMessageId();
         messageEvent = message.getEvent();
         messageEvent["method"] = "received";
         messageEvent["groupId"] = groupId;
-        console.log(messageEvent)
+        
         dbrooms.count({"groupId":groupId},function(err,room_count){
             if (room_count === 0){
                 console.log('new..')
@@ -160,8 +161,6 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 });
                 io.sockets.emit('messageinroom',messageEvent)
                 
-
-
             }else{
                 console.log('exits')
                 var userId = messageEvent.source.userId;
