@@ -150,9 +150,8 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         if (messageType != "text")
         {
             bot.getMessageContent(messageEvent.message.id).then(function(data) {
-               //console.log(data.body.toString('base64'))
-               //console.log(data.response)
-               fs.writeFile('./public/image/'+messageEvent.message.id,data.body,'binary',function(err)
+              
+               fs.writeFile('./public/downloads/'+messageEvent.message.id,data.body,'binary',function(err)
                {
 
                })
