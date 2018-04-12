@@ -150,8 +150,8 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         if (messageType != "text")
         {
             bot.getMessageContent(messageEvent.message.id).then(function(data) {
-               console.log(data.toString('base64'))
-               
+               console.log(data.body.toString('base64'))
+               console.log(data.response)
               }).catch(function(error) {
               // add your code when error.
               console.log(error)
@@ -165,9 +165,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 dbmessages.insert({"groupId":groupId,"messages":[messageEvent]})
                 
                 bot.getProfile(messageEvent.source.userId).then(function(data) {
-                    console.log(data)
+                    console.log(data.body)
                     dbrooms.update({"groupId":groupId},{$push:{"channel.members":data}});
-                    roomDetail["channel"]["members"].push(data) 
+                    roomDetail["channel"]["members"].push(data.body) 
                     io.sockets.emit('rooms',[roomDetail]) 
                 });
                 io.sockets.emit('messageinroom',messageEvent)
