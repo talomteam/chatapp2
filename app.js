@@ -134,11 +134,6 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         groupType = 'Room' ;
     }
     
-    //bot.pushTextMessage(groupdId, 'รับทราบ ++');
-
-    
-     
-
     if (groupId != ''){
         
         messageType = message.getMessageType();
@@ -150,7 +145,14 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         if (messageType != "text")
         {
             bot.getMessageContent(messageEvent.message.id).then(function(data) {
-              
+
+               var ext = "" ;
+
+               /*  switch(data.response.headers.content)
+                {
+
+                } */
+                console.log(data.response)
                fs.writeFile('./public/downloads/'+messageEvent.message.id,data.body,'binary',function(err)
                {
 
