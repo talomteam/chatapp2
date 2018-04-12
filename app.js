@@ -148,15 +148,28 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
 
                var ext = "" ;
 
-               /*  switch(data.response.headers.content)
+                switch(data.response.headers.content-type)
                 {
-
-                } */
+                    case 'image/jpeg':
+                        ext = ".jpg";
+                        break;
+                    case 'video/mp4':
+                        ext = ".mp4";
+                        break;
+                    case 'audio/x-m4a':
+                        ext = ".m4a";
+                        break;
+                    
+                } 
                 console.log(data.response)
-               fs.writeFile('./public/downloads/'+messageEvent.message.id,data.body,'binary',function(err)
-               {
-
-               })
+                var fn = messageEvent.message.id+ext
+                fs.writeFile('./public/downloads/'+fn,data.body,'binary',function(err)
+                {
+                    if (err){
+                        throw err
+                    }
+                    messageEvent["message"]["url"] = fn;
+                })
               }).catch(function(error) {
               // add your code when error.
               console.log(error)
@@ -170,7 +183,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 dbmessages.insert({"groupId":groupId,"messages":[messageEvent]})
                 
                 bot.getProfile(messageEvent.source.userId).then(function(data) {
-                    console.log(data.body)
+                    //console.log(data.body)
                     dbrooms.update({"groupId":groupId},{$push:{"channel.members":data}});
                     roomDetail["channel"]["members"].push(data.body) 
                     io.sockets.emit('rooms',[roomDetail]) 
