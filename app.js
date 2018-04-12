@@ -161,14 +161,15 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                         break;
                     
                 } 
-                console.log(data.response)
+                //console.log(data.response)
                 var fn = messageEvent.message.id+ext
+                messageEvent["message"]["url"] = fn;
                 fs.writeFile('./public/downloads/'+fn,data.body,'binary',function(err)
                 {
                     if (err){
                         throw err
                     }
-                    messageEvent["message"]["url"] = fn;
+                    
                 })
               }).catch(function(error) {
               // add your code when error.
