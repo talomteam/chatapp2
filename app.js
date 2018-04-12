@@ -154,7 +154,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                //console.log(data.response)
                fs.writeFile('./public/downloads/'+messageEvent.message.id,data.body,'binary',function(err)
                {
-                   
+
                })
               }).catch(function(error) {
               // add your code when error.
@@ -180,9 +180,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 console.log('exits')
                 var userId = messageEvent.source.userId;
                 bot.getProfile(messageEvent.source.userId).then(function(data) {
-                    console.log(data)
+                    //console.log(data)
                     dbrooms.update({"groupId":groupId},{$pull:{"channel.members":{"userId":userId}}});
-                    dbrooms.update({"groupId":groupId},{$push:{"channel.members":data}});
+                    dbrooms.update({"groupId":groupId},{$push:{"channel.members":data.body}});
                 });
                 dbmessages.update({"groupId":groupId},{$push:{"messages":messageEvent}});
                 io.sockets.emit('messageinroom',messageEvent);
