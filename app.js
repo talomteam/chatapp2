@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();  
 var server = require('http').createServer(app);  
 var io = require('socket.io')(server);
+var fs = require('fs');
 
 var LINEBot = require('line-messaging');
 var TextMessageBuilder = LINEBot.TextMessageBuilder;
@@ -146,6 +147,15 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         messageEvent["method"] = "received";
         messageEvent["groupId"] = groupId;
         console.log(messageEvent)
+        if (messageType != "text")
+        {
+            bot.getMessageContent(messageEvent.message.id).then(function(data) {
+               console.log(data)
+              }).catch(function(error) {
+              // add your code when error.
+              console.log(error)
+              });
+        }
         dbrooms.count({"groupId":groupId},function(err,room_count){
             if (room_count === 0){
                 console.log('new..')
