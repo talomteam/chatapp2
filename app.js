@@ -176,6 +176,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
               console.log(error)
               });
         }
+        console.log(messageEvent)
         dbrooms.count({"groupId":groupId},function(err,room_count){
             if (room_count === 0){
                 console.log('new..')
