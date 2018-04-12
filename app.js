@@ -150,9 +150,8 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         if (messageType != "text")
         {
             bot.getMessageContent(messageEvent.message.id).then(function(data) {
-               console.log(data)
-               var buffer = Buffer.concat(data)
-               console.log(buffer.toString('base64'))
+               console.log(data.toString('base64'))
+               
               }).catch(function(error) {
               // add your code when error.
               console.log(error)
