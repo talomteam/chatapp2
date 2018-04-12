@@ -139,7 +139,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
      
 
     if (groupId != ''){
-        console.log(messageEvent)
+        
         messageType = message.getMessageType();
         messageId = message.getMessageId();
         messageEvent = message.getEvent();
