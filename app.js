@@ -148,7 +148,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
 
                var ext = "" ;
 
-                switch(data.response.headers.content-type)
+                switch(data.response["headers"]["content-type"])
                 {
                     case 'image/jpeg':
                         ext = ".jpg";
