@@ -167,19 +167,13 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             });
 
         }
-            bot.getProfile(messageEvent.source.userId).then(function(data) {
-                messageEvent["source"]["detail"] = data;
-                storeMessage(messageEvent);
-            }).catch(function(error) {
-                console.log("getProile Error")
-                console.log(error)
-            });
-            storeMessage(messageEvent);
+      
+        storeMessage(messageEvent);
      
    }
    function storeMessage(document)
    {
-     
+        console.log(document)
        dbrooms.findOne({"groupId":document.groupId},function(err,result)
        {
            if (!result)
@@ -192,7 +186,14 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
            //update member in room
            if(document.source != "agent")
            {
-                dbrooms.update({"groupId":document.groupId,"channel.members.userId":document.detail.userId},{$push:{"channel.members":document.detail}});
+                bot.getProfile(document.source.userId).then(function(data) {
+                    document["source"]["detail"] = data;
+                    //storeMessage(messageEvent);
+                    dbrooms.update({"groupId":document.groupId,"channel.members.userId":document.detail.userId},{$push:{"channel.members":document.detail}});
+                }).catch(function(error) {
+                    console.log("getProile Error")
+                    console.log(error)
+                });
            }
             //update message
             dbmessages.update({"groupId":document.groupId,"message.id":document.message.id},{"messages":[document]},{upsert:true})
