@@ -86,7 +86,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 socket.emit('pullMessage',res)
             });
         });
-        socket.on('reqestEvaluation',function(data)
+        socket.on('requestEvaluation',function(data)
         {
             
               console.log(data)
