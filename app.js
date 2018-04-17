@@ -59,7 +59,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             if (err){
                 throw err
             }
-            socket.emit('room',res)
+            socket.emit('pullRoom',res)
         });
         socket.on('replyMessage',function(data){
             console.log('replyMessage')
@@ -83,7 +83,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 if (err){
                     throw err
                 }
-                socket.emit('message',res)
+                socket.emit('pullMessage',res)
             });
         });
         socket.on('reqestEvaluation',function(data)

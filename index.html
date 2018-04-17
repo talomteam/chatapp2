@@ -9,7 +9,7 @@
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
-    <title>MongoChat</title>
+    <title>Service Chat</title>
     <style>
         #messages{height:300px;}
     </style>
@@ -141,6 +141,7 @@
                 });
                 
                 socket.on('pullRoom', function(data){
+                    console.log('pullRoom');
                     console.log(data);
                     if(data.length){
                         for(var x = 0;x < data.length;x++){
@@ -220,6 +221,7 @@
                 socket.on('pullMessage', function(data){
                    //$("div.right-section div.message ul li").remove()
                    console.log("pullMessage")
+                   console.log(data)
                    if (current_groupId == data.groupId)
                    {
                         var groupTemplate = "";
