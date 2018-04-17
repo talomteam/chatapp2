@@ -197,7 +197,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 });
            }
             //update message
-            dbmessages.update({"groupId":document.groupId,"message.id":document.message.id},{$push:{"messages":document}})
+            dbmessages.update({"groupId":document.groupId,"message.id":document.message.id},{$push:{"messages":document}},{upsert:true})
             broadcast('pullMessage',[document])
        })
    }
