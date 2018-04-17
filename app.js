@@ -199,16 +199,18 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             //update message
             dbmessages.findOne({"groupId":document.groupId},function(err,result)
             {
-                
-                if (result.groupId == document.groupId && result.messages.message.id == document.message.id)
+                if (result)
                 {
-                    dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$addToSet:{"messages":document}})
-                    
-                }
-                else if(result.groupId == document.groupId)
-                {
-                    
-                    dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$push:{"messages":document}})
+                    if (result.groupId == document.groupId && result.messages.message.id == document.message.id)
+                    {
+                        dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$addToSet:{"messages":document}})
+                        
+                    }
+                    else if(result.groupId == document.groupId)
+                    {
+                        
+                        dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$push:{"messages":document}})
+                    }
                 }
                 else
                 {
