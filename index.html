@@ -232,7 +232,7 @@
                             if (current_groupId == data[x].messages[y].groupId)
                             {
                                 var groupTemplate = "";
-                                if (data.method == 'received')
+                                if (data[x].messages[y].method == 'received')
                                 {
                                         groupTemplate = ` <li class="msg-left" msgId="{2}">
                                                         <div class="msg-left-sub">
