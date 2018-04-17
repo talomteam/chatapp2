@@ -201,16 +201,18 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             {
                 if (result)
                 {
-                  
+                    console.log(result.messages[0].message.id)
+                    console.log(document.message.id)
                     if (result.messages[0].message.id == document.message.id)
                     {
+                        console.log("exists")
                         dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$addToSet:{"messages":document}})
                         
                     }
-                    else if(result.groupId == document.groupId)
+                    else
                     {
                         
-                        dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$push:{"messages":document}})
+                        dbmessages.update({"groupId":document.groupId},{$push:{"messages":document}})
                     }
                 }
                 else
