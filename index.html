@@ -229,7 +229,7 @@
                        {
                            for(var y=0; y < data[x].messages.length;y++)
                            {
-                            if (current_groupId == data[x].groupId)
+                            if (current_groupId == data[x].messages[y].groupId)
                             {
                                 var groupTemplate = "";
                                 if (data.method == 'received')
@@ -256,7 +256,7 @@
                                                         </div>
                                                     </li>`
                                     }
-                                    if(data.message.type === 'text')
+                                    if(data[x].messages[y].message.type === 'text')
                                     {
                                         groupTemplate = groupTemplate.replace("{0}",data[x].messages[y].message.text) 
                                     }
