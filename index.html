@@ -223,57 +223,67 @@
                    //$("div.right-section div.message ul li").remove()
                    console.log("pullMessage")
                    console.log(data)
-                   if (current_groupId == data.groupId)
+                   if (data.length)
                    {
-                        var groupTemplate = "";
-                       if (data.method == 'received')
+                       for(var x = 0;x < data.length;x++)
                        {
-                            groupTemplate = ` <li class="msg-left" msgId="{2}">
-                                            <div class="msg-left-sub">
-                                                <img src="image/man01.png">
-                                                <div class="msg-desc">
-                                                    {0}
-                                                </div>
-                                                <small>{1}</small>
-                                            </div>
-                                        </li>`
-                        }
-                        else
-                        {
-                            groupTemplate = ` <li class="msg-right" msgId="{2}">
-                                            <div class="msg-left-sub">
-                                                <img src="image/man03.png">
-                                                <div class="msg-desc">
-                                                    {0}
-                                                </div>
-                                                <small>{1}</small>
-                                            </div>
-                                        </li>`
-                        }
-                        if(data.message.type === 'text')
-                        {
-                            groupTemplate = groupTemplate.replace("{0}",data.message.text) 
-                        }
-                        else
-                        {
-                            roupTemplate = groupTemplate.replace("{0}",data.message.type)    
-                        }
-                        groupTemplate = groupTemplate.replace("{1}",formatDate(data.timestamp))
-                        groupTemplate = groupTemplate.replace("{2}",data.mesage.id)
+                           for(var y=0; y < data[x].messages.length;y++)
+                           {
+                            if (current_groupId == data[x].groupId)
+                            {
+                                var groupTemplate = "";
+                                if (data.method == 'received')
+                                {
+                                        groupTemplate = ` <li class="msg-left" msgId="{2}">
+                                                        <div class="msg-left-sub">
+                                                            <img src="image/man01.png">
+                                                            <div class="msg-desc">
+                                                                {0}
+                                                            </div>
+                                                            <small>{1}</small>
+                                                        </div>
+                                                    </li>`
+                                    }
+                                    else
+                                    {
+                                        groupTemplate = ` <li class="msg-right" msgId="{2}">
+                                                        <div class="msg-left-sub">
+                                                            <img src="image/man03.png">
+                                                            <div class="msg-desc">
+                                                                {0}
+                                                            </div>
+                                                            <small>{1}</small>
+                                                        </div>
+                                                    </li>`
+                                    }
+                                    if(data.message.type === 'text')
+                                    {
+                                        groupTemplate = groupTemplate.replace("{0}",data[x].messages[y].message.text) 
+                                    }
+                                    else
+                                    {
+                                        roupTemplate = groupTemplate.replace("{0}",data[x].messages[y].message.type)    
+                                    }
+                                    groupTemplate = groupTemplate.replace("{1}",formatDate(data[x].messages[y].timestamp))
+                                    groupTemplate = groupTemplate.replace("{2}",data[x].messages[y].message.id)
 
-                        if ($("div.right-section div.message ul li#"+data.message.id).length > 0)
-                        {
-                            $("div.right-section div.message ul li#"+data.message.id).replaceWith(groupTemplate)
-                        }
-                        else
-                        {
-                            $("div.right-section div.message ul").append(groupTemplate)
-                        }
-                       
+                                    if ($("div.right-section div.message ul li#"+data[x].messages[y].message.id).length > 0)
+                                    {
+                                        $("div.right-section div.message ul li#"+data[x].messages[y].message.id).replaceWith(groupTemplate)
+                                    }
+                                    else
+                                    {
+                                        $("div.right-section div.message ul").append(groupTemplate)
+                                    }
+                                
 
-                        $("div.right-section div.message").mCustomScrollbar("scrollTo","bottom");
-                        console.log(data)
+                                    $("div.right-section div.message").mCustomScrollbar("scrollTo","bottom");
+                                    console.log(data)
+                            }
+                           }
+                       }
                    }
+                   
                   
                 }); 
             }
