@@ -197,15 +197,22 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 });
            }
             //update message
-            dbmessages.findOne({"groupId":document.groupId,"messages.message.id":document.message.id},function(err,result)
+            dbmessages.findOne({"groupId":document.groupId},function(err,result)
             {
-                if (!result)
+                
+                if (result.groupId == document.groupId && result.messages.message.id == document.message.id)
                 {
-                    dbmessages.insert({"groupId":document.groupId,"messages":[document]})  
+                    dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$addToSet:{"messages":document}})
+                    
+                }
+                else if(result.groupId == document.groupId)
+                {
+                    
+                    dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$push:{"messages":document}})
                 }
                 else
                 {
-                    dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$addToSet:{"messages":document}})
+                    dbmessages.insert({"groupId":document.groupId,"messages":document})
                 }
                 broadcast('pullMessage',[document])
                
