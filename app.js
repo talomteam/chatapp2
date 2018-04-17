@@ -189,8 +189,8 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
            {
                 bot.getProfile(document.source.userId).then(function(data) {
                     document["source"]["detail"] = data.body;
-                    console.log(document)
-                    dbrooms.update({"groupId":document.groupId,"channel.members.userId":document.source.userId},{$addToSet:{"channel.members":document.source.detail}});
+                    //console.log(document)
+                    dbrooms.update({"groupId":document.groupId,"channel.members.userId":document.source.userId},{$addToSet:{"channel.members":{$each:document.source.detail}}});
                 }).catch(function(error) {
                     console.log("getProile Error")
                     console.log(error)
