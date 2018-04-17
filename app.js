@@ -182,7 +182,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                dbrooms.insert(roomDetail)
                broadcast('pullRoom',[roomDetail])
 
-               dbmessages.insert({"groupId":document.groupId},{"messages":[document]})   
+               dbmessages.insert({"groupId":document.groupId,"messages":[document]})   
            }
            //update member in room
            if(document.source != "agent")
