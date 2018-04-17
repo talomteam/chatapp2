@@ -181,7 +181,8 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                var roomDetail = {"groupId":document.groupId, "channel":{"name":"LINE@","type":document.groupType,"members":[{userId:document.source.userId}]}}
                dbrooms.insert(roomDetail)
                broadcast('pullRoom',[roomDetail])
-               
+
+               dbmessages.insert({"groupId":document.groupId,"message.id":document.message.id},{"messages":[document]})   
            }
            //update member in room
            if(document.source != "agent")
@@ -196,7 +197,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 });
            }
             //update message
-            dbmessages.update({"groupId":document.groupId,"message.id":document.message.id},{"messages":[document]},{upsert:true})
+            dbmessages.update({"groupId":document.groupId,"message.id":document.message.id},{$push:{"messages":document}})
             broadcast('pullMessage',[document])
        })
    }
