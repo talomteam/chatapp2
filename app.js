@@ -137,7 +137,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             bot.getMessageContent(messageEvent.message.id).then(function(data) {
 
                 var ext = "" ;
- 
+                console.log(data.response)
                 switch(data.response["headers"]["content-type"])
                 {
                     case 'image/jpeg':
