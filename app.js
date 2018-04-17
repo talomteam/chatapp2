@@ -201,8 +201,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             {
                 if (result)
                 {
-                    console.log(result.messages)
-                    if (result.groupId == document.groupId && result.messages.message.id == document.message.id)
+                    console.log(result.messages.message.id )
+                    console.log(document.message.id)
+                    if (result.messages.message.id == document.message.id)
                     {
                         dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$addToSet:{"messages":document}})
                         
