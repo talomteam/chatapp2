@@ -188,7 +188,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
            {
                 bot.getProfile(document.source.userId).then(function(data) {
                     document["source"]["detail"] = data;
-                    //storeMessage(messageEvent);
+                    console.log(data)
                     dbrooms.update({"groupId":document.groupId,"channel.members.userId":document.detail.userId},{$push:{"channel.members":document.detail}});
                 }).catch(function(error) {
                     console.log("getProile Error")
