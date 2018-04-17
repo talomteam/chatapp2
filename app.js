@@ -214,7 +214,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 }
                 else
                 {
-                    dbmessages.insert({"groupId":document.groupId,"messages":document})
+                    dbmessages.insert({"groupId":document.groupId,"messages":[document]})
                 }
                 broadcast('pullMessage',[document])
                
