@@ -61,6 +61,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             }
             socket.emit('pullRoom',res)
         });
+
         socket.on('replyMessage',function(data){
             console.log('replyMessage')
             bot.pushTextMessage(data.groupId, data.message);
@@ -69,14 +70,13 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             var id = uuid.v4()
             var msg = {type:"text",text:data.message,id:id};
             var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupId:data.groupId,message:msg};
-            
-           
 
             storeMessage(replyMessage)
             console.log(data);
         });
-        socket.on('reqestMessage',function(data){
-            console.log('reqestMessage')
+
+        socket.on('requestMessage',function(data){
+            console.log('requestMessage')
             console.log(data)
             dbmessages.find({"groupId":data.groupId}).limit(100).toArray(function(err,res){
                 //console.log(res)

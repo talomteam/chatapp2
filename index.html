@@ -114,8 +114,9 @@
 
                     current_groupId = room
                     current_type = type
+
                     if (current_groupId !='' ){
-                        socket.emit('requestMessage',{
+                        socket.emit('reqestMessage',{
                            groupId: current_groupId,
                            type: current_type
                         })
