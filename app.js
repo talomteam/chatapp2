@@ -70,9 +70,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             var msg = {type:"text",text:data.message,id:id};
             var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupId:data.groupId,message:msg};
             
-            /* console.log(replyMessage);
-            dbmessages.update({"groupId":data.groupId},{$push:{"messages":replyMessage}});
-            socket.emit('messageinroom',replyMessage); */
+           
 
             storeMessage(replyMessage)
             console.log(data);
@@ -105,8 +103,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 var msg = {type:"text",text:"--- Evaluate for this service ---"};
                 var replyMessage = {type:"message",source:source,timestamp:Date.now(),method:"send",groupId:data.groupId,message:msg};
                 
-                /* dbmessages.update({"groupId":data.groupId},{$push:{"messages":replyMessage}});
-                socket.emit('messageinroom',replyMessage); */
+            
 
                 storeMessage(replyMessage)
               }).catch(function(error) {
@@ -135,7 +132,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         messageEvent["groupId"] = groupId;
         messageEvent["groupType"] = groupType;
 
-        if (messageType != "text")
+        if ( messageType == "image" || messageType == "video" || messageType == "file" || messageType == "audio")
         {
             bot.getMessageContent(messageEvent.message.id).then(function(data) {
 
