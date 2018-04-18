@@ -295,7 +295,7 @@
                                         case 'location':
                                             position = data[x].messages[y].message.latitude +","+data[x].messages[y].message.longitude
                                             url ="https://maps.googleapis.com/maps/api/staticmap?center="+ position +"&zoom=14&size=400x400&key=AIzaSyAsopv_J-9nWkUlybluI3RYXYoWb5llXAs"
-                                            messageFormat = "<img style='width:300px' src='downloads/"+data[x].messages[y].message.url+"'/>";
+                                            messageFormat = "<img style='width:300px' src='"+url+"'/>";
                                             break;
                                       
                                     } 
