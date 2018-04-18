@@ -278,10 +278,10 @@
                                             messageFormat = data[x].messages[y].message.text;
                                             break;
                                         case 'video':
-                                            messageFormat = "<video controls width='250px'><source src='downloads/"+data[x].messages[y].message.url+"' type='video/mp4'></video>";
+                                            messageFormat = "<video controls width='auto'><source src='downloads/"+data[x].messages[y].message.url+"' type='video/mp4'></video>";
                                             break;
                                         case 'audio':
-                                            messageFormat = "<audio controls='controls' width='250px'><source src='downloads/"+data[x].messages[y].message.url+"' type='audio/mp4'></audio>";
+                                            messageFormat = "<audio controls='controls' width='auto'><source src='downloads/"+data[x].messages[y].message.url+"' type='audio/mp4'></audio>";
                                             break;
                                         case 'sticker':
                                             messageFormat = "<img src='https://stickershop.line-scdn.net/stickershop/v1/sticker/"+data[x].messages[y].message.stickerId+"/ANDROID/sticker.png;compress=true'/>";
@@ -295,7 +295,7 @@
                                         case 'location':
                                             position = data[x].messages[y].message.latitude +","+data[x].messages[y].message.longitude
                                             url ="https://maps.googleapis.com/maps/api/staticmap?center="+ position +"&zoom=14&size=400x400&key=AIzaSyAsopv_J-9nWkUlybluI3RYXYoWb5llXAs"
-                                            messageFormat = "<img style='width:300px' align='bottom' src='"+url+"'/> <p>"+data[x].messages[y].message.address+"</p>";
+                                            messageFormat = "<img  align='bottom' src='"+url+"'/> <p>"+data[x].messages[y].message.address+"</p>";
                                             break;
                                       
                                     } 
