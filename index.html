@@ -284,7 +284,7 @@
                                             messageFormat = "<audio controls='controls' width='400px'><source src='downloads/"+data[x].messages[y].message.url+"' type='audio/mp4'></audio>";
                                             break;
                                         case 'sticker':
-                                            messageFormat = "<img src='https://stickershop.line-scdn.net/stickershop/v1/sticker/"+data[x].messages[y].message.stickerId+"/ANDROID/sticker.png;compress=true'/>";
+                                            messageFormat = "<img class='sticker' src='https://stickershop.line-scdn.net/stickershop/v1/sticker/"+data[x].messages[y].message.stickerId+"/ANDROID/sticker.png;compress=true'/>";
                                             break;
                                         case 'file':
                                             messageFormat = "File";
