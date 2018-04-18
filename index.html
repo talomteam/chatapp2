@@ -256,14 +256,39 @@
                                                         </div>
                                                     </li>`
                                     }
-                                    if(data[x].messages[y].message.type === 'text')
+
+                                    /* if(data[x].messages[y].message.type === 'text')
                                     {
                                         groupTemplate = groupTemplate.replace("{0}",data[x].messages[y].message.text) 
                                     }
                                     else
                                     {
                                         roupTemplate = groupTemplate.replace("{0}",data[x].messages[y].message.type)    
-                                    }
+                                    } */
+                                    var messageFormat = "";
+                                    switch(data[x].messages[y].message.type)
+                                    {
+                                        case 'text':
+                                            messageFormat = data[x].messages[y].message.text;
+                                            break;
+                                        case 'video':
+                                            messageFormat = "<video controls><source src='downloads/'"+data[x].messages[y].message.url+" type='video/mp4'></video>";
+                                            break;
+                                        case 'audio':
+                                            messageFormat = "<audio controls='controls'><source src='downloads/"+data[x].messages[y].message.url+"' type='audio/mp4'></audio>";
+                                            break;
+                                        case 'sticker':
+                                            messageFormat = "<img src='https://stickershop.line-scdn.net/stickershop/v1/sticker/"+data[x].messages[y].message.stickerId+"/ANDROID/sticker.png;compress=true/'>";
+                                            break;
+                                        case 'file':
+                                            messageFormat = "File";
+                                            break;
+                                        case 'image':
+                                            messageFormat = "<img src='downloads/"+data[x].messages[y].message.url+"'>";
+                                            break;
+                                      
+                                    } 
+                                    groupTemplate = groupTemplate.replace("{0}",messageFormat) 
                                     groupTemplate = groupTemplate.replace("{1}",formatDate(data[x].messages[y].timestamp))
                                     groupTemplate = groupTemplate.replace("{2}",data[x].messages[y].message.id)
                                     var imageperson = "image/man01.png"
