@@ -173,16 +173,14 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
    }
    function storeMessage(document)
    {
-        console.log(document)
+       console.log(document)
        dbrooms.findOne({"groupId":document.groupId},function(err,result)
        {
            if (!result)
            {
                var roomDetail = {"groupId":document.groupId, "channel":{"name":"LINE@","type":document.groupType,"members":[{userId:document.source.userId}]}}
                dbrooms.insert(roomDetail)
-               broadcast('pullRoom',[roomDetail])
-
-               
+               broadcast('pullRoom',[roomDetail])  
            }
            //update member in room
            if(document.source != "agent" && document["source"]["detail"] == undefined )
