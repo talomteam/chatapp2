@@ -185,7 +185,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                
            }
            //update member in room
-           if(document.source != "agent")
+           if(document.source != "agent" && document["source"]["detail"] == undefined )
            {
                 bot.getProfile(document.source.userId).then(function(data) {
                     document["source"]["detail"] = data.body;
@@ -207,7 +207,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                     if (result.messages[0].message.id == document.message.id)
                     {
                         console.log("exists")
-                        dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$addToSet:{"messages":document}})
+                        dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$set:{"messages.$":document}})
                         
                     }
                     else
