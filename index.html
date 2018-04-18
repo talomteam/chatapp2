@@ -323,9 +323,10 @@
                                 
 
                                     $("div.right-section div.message").mCustomScrollbar("scrollTo","bottom");
-                                    $("div.left-section ul").prependTo($("div.left-section ul li#"+data[x].messages[y].groupId))
+                                    
                                     console.log(data)
                             }
+                            $("div.left-section ul").prependTo($("div.left-section ul li#"+data[x].messages[y].groupId))
                            }
                        }
                    }
