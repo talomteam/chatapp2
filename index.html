@@ -171,7 +171,7 @@
                                 
                                 groupTemplate = groupTemplate.replace(new RegExp("{1}",'g'),data[x].groupId)
                                 groupTemplate = groupTemplate.replace(new RegExp("{0}",'g'),displayName.join(","))
-                                groupTemplate = groupTemplate.replace(new RegExp("{2}",'g'),data[x].channel.name)
+                                //groupTemplate = groupTemplate.replace(new RegExp("{2}",'g'),data[x].channel.name)
                             if ($("div.left-section ul li#"+data[x].groupId).length)
                             {
                                 $("div.left-section ul li#"+data[x].groupId).replaceWith(groupTemplate)
