@@ -273,7 +273,7 @@
                                     }
                                     groupTemplate = groupTemplate.replace("{3}",imageperson)
 
-                                    if ($("div.right-section div.message ul li#"+data[x].messages[y].message.id).length > 0)
+                                    if ($("div.right-section div.message ul li#"+data[x].messages[y].message.id).length)
                                     {
                                         console.log("exists element")
                                         $("div.right-section div.message ul li#"+data[x].messages[y].message.id).replaceWith(groupTemplate)
