@@ -183,7 +183,7 @@ body{
 }
 .message ul li.msg-left .msg-desc img{
 	position: static;
-	width: auto
+	width: 250px;
 }
 .message ul li.msg-left .msg-desc:before{
 	position: absolute;
@@ -218,7 +218,7 @@ body{
 }
 .message ul li.msg-right .msg-desc img{
 	position: static;
-	width: auto
+	width: 250px;
 }
 .message ul li.msg-right .msg-desc:before{
 	position: absolute;
