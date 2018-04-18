@@ -187,7 +187,7 @@ body{
 }
 .message ul li.msg-left .msg-desc img.sticker{
 	position: static;
-	width: 256px;
+	width: 200px;
 }
 .message ul li.msg-left .msg-desc:before{
 	position: absolute;
@@ -226,7 +226,7 @@ body{
 }
 .message ul li.msg-right .msg-desc img.sticker{
 	position: static;
-	width: 256px;
+	width: 200px;
 }
 .message ul li.msg-right .msg-desc:before{
 	position: absolute;
