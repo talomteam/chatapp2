@@ -200,7 +200,7 @@
                 $("button.btn-send").click(function(event){
                     var message = $("input#message").val()
                     if (current_groupId !='' && message !='' ){
-                        socket.emit('reply',{
+                        socket.emit('replyMessage',{
                            groupId: current_groupId,
                            type: current_type,
                            message: message
