@@ -267,7 +267,7 @@
                                     groupTemplate = groupTemplate.replace("{1}",formatDate(data[x].messages[y].timestamp))
                                     groupTemplate = groupTemplate.replace("{2}",data[x].messages[y].message.id)
                                     var imageperson = "image/man01.png"
-                                    if (data[x].messages[y].source.detail.pictureUrl == undefined)
+                                    if (data[x].messages[y].source.detail != undefined)
                                     {
                                         imageperson = data[x].messages[y].source.detail.pictureUrl;
                                     }
