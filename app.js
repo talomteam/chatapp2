@@ -188,7 +188,18 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 bot.getProfile(document.source.userId).then(function(data) {
                     document["source"]["detail"] = data.body;
                     //console.log(document)
-                    dbrooms.update({"groupId":document.groupId,"channel.members.userId":document.source.userId},{$set:{"channel.members.$":document.source.detail}},{upsert:true});
+                   
+                    dbrooms.findOne({"groupId":document.groupId,"channel.members.userId":document.source.userId},function(err,result)
+                    {
+                        if (result)
+                        {
+                            dbrooms.update({"groupId":document.groupId,"channel.members.userId":document.source.userId},{$set:{"channel.members.$":document.source.detail}});
+                        }
+                        else
+                        {  
+                            dbrooms.update({"groupId":document.groupId},{$push:{"channel.members":document.source.detail}});
+                        }
+                    })
                     storeMessage(document);
                 }).catch(function(error) {
                     console.log("getProile Error")
@@ -222,8 +233,6 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 broadcast('pullMessage',[{"groupId":document.groupId,messages:[document]}])
                
             })
-           
-           
        })
    }
    function broadcast(eventHook,messageEvent)
