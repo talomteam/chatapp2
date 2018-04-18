@@ -272,7 +272,7 @@
                                             messageFormat = data[x].messages[y].message.text;
                                             break;
                                         case 'video':
-                                            messageFormat = "<video controls><source src='downloads/'"+data[x].messages[y].message.url+" type='video/mp4'></video>";
+                                            messageFormat = "<video controls><source src='downloads/"+data[x].messages[y].message.url+"' type='video/mp4'></video>";
                                             break;
                                         case 'audio':
                                             messageFormat = "<audio controls='controls'><source src='downloads/"+data[x].messages[y].message.url+"' type='audio/mp4'></audio>";
