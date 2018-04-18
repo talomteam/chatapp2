@@ -176,11 +176,12 @@
                             if ($("div.left-section ul li#"+data[x].groupId).length)
                             {
                                 $("div.left-section ul li#"+data[x].groupId).replaceWith(groupTemplate)
-                                $("div.left-section ul").prependTo($("div.left-section ul li#"+data[x].groupId))
+                                $("div.left-section ul").prepend($("div.left-section ul li#"+data[x].groupId))
                             }  
                             else
                             {
-                                $("div.left-section ul").prepend(groupTemplate)
+                                $("div.left-section ul").append(groupTemplate)
+                                $("div.left-section ul").prepend($("div.left-section ul li#"+data[x].groupId))
                             }
                             
                           
@@ -326,7 +327,7 @@
                                     
                                     console.log(data)
                             }
-                            $("div.left-section ul").prependTo($("div.left-section ul li#"+data[x].messages[y].groupId))
+                            $("div.left-section ul").prepend($("div.left-section ul li#"+data[x].messages[y].groupId))
                            }
                        }
                    }
