@@ -147,7 +147,7 @@
                     if(data.length){
                         for(var x = 0;x < data.length;x++){
                            
-                            var groupTemplate = `<li>
+                            var groupTemplate = `<li id="{1}">
 						                    <div class="chatList">
 							                    <div class="img">
 								                    <i class="fa fa-circle"></i>
@@ -167,15 +167,19 @@
                                     displayName.push(data[x].channel.members[y].displayName);
                                 }
                                 console.log(displayName);
-                                if (displayName.length === 0)
-                                {
-                                    //displayName.push("Unknow")
-                                }
+                                
                                 groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
                                 groupTemplate = groupTemplate.replace("{0}",displayName.join(","))
                                 groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
-                              
-                            $("div.body-section div.left-section ul").append(groupTemplate)
+                            if ($("div.left-section ul li#"+data[x].groupId).length)
+                            {
+                                $("div.left-section ul li#"+data[x].groupId).replaceWith(groupTemplate)
+                            }  
+                            else
+                            {
+                                $("div.body-section div.left-section ul").append(groupTemplate)
+                            }
+                            
                           
                         }
                         setonclickroom()
@@ -231,10 +235,10 @@
                            {
                             if (current_groupId == data[x].messages[y].groupId)
                             {
-                                var groupTemplate = "";
+                                var messageTemplate = "";
                                 if (data[x].messages[y].method == 'received')
                                 {
-                                        groupTemplate = ` <li class="msg-left" id="{2}">
+                                    messageTemplate = ` <li class="msg-left" id="{2}">
                                                         <div class="msg-left-sub">
                                                             <img src="{3}">
                                                             <div class="msg-desc">
@@ -246,7 +250,7 @@
                                     }
                                     else
                                     {
-                                        groupTemplate = ` <li class="msg-right" id="{2}">
+                                        messageTemplate = ` <li class="msg-right" id="{2}">
                                                         <div class="msg-left-sub">
                                                             <img src="{3}">
                                                             <div class="msg-desc">
@@ -288,25 +292,25 @@
                                             break;
                                       
                                     } 
-                                    groupTemplate = groupTemplate.replace("{0}",messageFormat) 
-                                    groupTemplate = groupTemplate.replace("{1}",formatDate(data[x].messages[y].timestamp))
-                                    groupTemplate = groupTemplate.replace("{2}",data[x].messages[y].message.id)
+                                    messageTemplate = messageTemplate.replace("{0}",messageFormat) 
+                                    messageTemplate = messageTemplate.replace("{1}",formatDate(data[x].messages[y].timestamp))
+                                    messageTemplate = messageTemplate.replace("{2}",data[x].messages[y].message.id)
                                     var imageperson = "image/man01.png"
                                     if (data[x].messages[y].source.detail != undefined)
                                     {
                                         imageperson = data[x].messages[y].source.detail.pictureUrl;
                                     }
-                                    groupTemplate = groupTemplate.replace("{3}",imageperson)
+                                    messageTemplate = messageTemplate.replace("{3}",imageperson)
 
                                     if ($("div.right-section div.message ul li#"+data[x].messages[y].message.id).length)
                                     {
                                         console.log("exists element")
-                                        $("div.right-section div.message ul li#"+data[x].messages[y].message.id).replaceWith(groupTemplate)
+                                        $("div.right-section div.message ul li#"+data[x].messages[y].message.id).replaceWith(messageTemplate)
                                     }
                                     else
                                     {
                                         console.log("new element")
-                                        $("div.right-section div.message ul").append(groupTemplate)
+                                        $("div.right-section div.message ul").append(messageTemplate)
                                     }
                                 
 
