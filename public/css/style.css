@@ -181,6 +181,9 @@ body{
 	border-radius: 5px 5px 5px 0px;
 	position: relative;
 }
+.message ul li.msg-left .msg-desc img{
+	
+}
 .message ul li.msg-left .msg-desc:before{
 	position: absolute;
 	content: '';
@@ -211,6 +214,9 @@ body{
 	padding:5px 10px;
 	border-radius: 5px 5px 5px 0px;
 	position: relative;
+}
+.message ul li.msg-right .msg-desc img{
+	
 }
 .message ul li.msg-right .msg-desc:before{
 	position: absolute;
