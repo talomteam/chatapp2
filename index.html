@@ -233,9 +233,15 @@
                    console.log(data)
                    if (data.length)
                    {
-                       for(var x = 0;x < data.length;x++)
+                       
+                       for(var x = 0; x < data.length; x++)
                        {
-                           for(var y=0; y < data[x].messages.length;y++)
+                            var messageLine = 0;
+                            if (data[x].messages.length > 500)
+                            {
+                                messageLine = data.length - 500;
+                            }
+                           for(var y= messageLine; y < data[x].messages.length;y++)
                            {
                             if (current_groupId == data[x].messages[y].groupId)
                             {
