@@ -82,6 +82,10 @@
 	<!-- custom scrollbar plugin -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script>
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
       function formatDate(date) {
             date = new Date(date)
             var hours = date.getHours();
@@ -168,9 +172,9 @@
                                 }
                                 console.log(displayName);
                                 
-                                groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
-                                groupTemplate = groupTemplate.replace("{0}",displayName.join(","))
-                                groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
+                                groupTemplate = groupTemplate.replaceAll("{1}",data[x].groupId)
+                                groupTemplate = groupTemplate.replaceAll("{0}",displayName.join(","))
+                                groupTemplate = groupTemplate.replaceAll("{2}",data[x].channel.name)
                             if ($("div.left-section ul li#"+data[x].groupId).length)
                             {
                                 $("div.left-section ul li#"+data[x].groupId).replaceWith(groupTemplate)
@@ -292,15 +296,15 @@
                                             break;
                                       
                                     } 
-                                    messageTemplate = messageTemplate.replace("{0}",messageFormat) 
-                                    messageTemplate = messageTemplate.replace("{1}",formatDate(data[x].messages[y].timestamp))
-                                    messageTemplate = messageTemplate.replace("{2}",data[x].messages[y].message.id)
+                                    messageTemplate = messageTemplate.replaceAll("{0}",messageFormat) 
+                                    messageTemplate = messageTemplate.replaceAll("{1}",formatDate(data[x].messages[y].timestamp))
+                                    messageTemplate = messageTemplate.replaceAll("{2}",data[x].messages[y].message.id)
                                     var imageperson = "image/man01.png"
                                     if (data[x].messages[y].source.detail != undefined)
                                     {
                                         imageperson = data[x].messages[y].source.detail.pictureUrl;
                                     }
-                                    messageTemplate = messageTemplate.replace("{3}",imageperson)
+                                    messageTemplate = messageTemplate.replaceAll("{3}",imageperson)
 
                                     if ($("div.right-section div.message ul li#"+data[x].messages[y].message.id).length)
                                     {
