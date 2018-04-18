@@ -176,10 +176,11 @@
                             if ($("div.left-section ul li#"+data[x].groupId).length)
                             {
                                 $("div.left-section ul li#"+data[x].groupId).replaceWith(groupTemplate)
+                                $("div.left-section ul").prependTo($("div.left-section ul li#"+data[x].groupId))
                             }  
                             else
                             {
-                                $("div.body-section div.left-section ul").append(groupTemplate)
+                                $("div.left-section ul").prepend(groupTemplate)
                             }
                             
                           
