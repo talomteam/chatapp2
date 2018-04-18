@@ -148,7 +148,7 @@
                     if(data.length){
                         for(var x = 0;x < data.length;x++){
                            
-                            var groupTemplate = `<li id="{1}">
+                            var groupTemplate = `<li id="{3}">
 						                    <div class="chatList">
 							                    <div class="img">
 								                    <i class="fa fa-circle"></i>
@@ -169,9 +169,10 @@
                                 }
                                 console.log(displayName);
                                 
-                                groupTemplate = groupTemplate.replace(/{1}/g,data[x].groupId)
-                                groupTemplate = groupTemplate.replace(/{0}/g,displayName.join(","))
-                                groupTemplate = groupTemplate.replace(/{2}/g,data[x].channel.name)
+                                groupTemplate = groupTemplate.replace("{1}",data[x].groupId)
+                                groupTemplate = groupTemplate.replace("{0}",displayName.join(","))
+                                groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
+                                groupTemplate = groupTemplate.replace("{3}",data[x].groupId)
                             if ($("div.left-section ul li#"+data[x].groupId).length)
                             {
                                 $("div.left-section ul li#"+data[x].groupId).replaceWith(groupTemplate)
