@@ -322,11 +322,13 @@
                                         $("div.right-section div.message ul").append(messageTemplate)
                                     }
                                 
-
+                                    $("div.left-section ul li#"+data[x].messages[y].groupId+" div.chatList div.img i.fa").remove();
                                     $("div.right-section div.message").mCustomScrollbar("scrollTo","bottom");
                                     
                                     console.log(data)
                             }
+                            $("div.left-section ul li#"+data[x].messages[y].groupId+" div.chatList div.img i.fa").remove();
+                            $("div.left-section ul li#"+data[x].messages[y].groupId+" div.chatList div.img").prepend('<i class="fa fa-circle"></i>');
                             $("div.left-section ul").prepend($("div.left-section ul li#"+data[x].messages[y].groupId))
                            }
                        }
