@@ -198,28 +198,29 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 });
            }
             //update message
-            dbmessages.findOne({"groupId":document.groupId},function(err,result)
+            dbmessages.findOne({"groupId":document.groupId,"messages.message.id":document.message.id},function(err,result)
             {
                 if (result)
                 {
-                    console.log(result.messages[0].message.id)
-                    console.log(document.message.id)
-                    if (result.messages[0].message.id == document.message.id)
-                    {
-                        console.log("exists")
-                        dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$set:{"messages.$":document}})
-                        
-                    }
-                    else
-                    {
-                        
-                        dbmessages.update({"groupId":document.groupId},{$push:{"messages":document}})
-                    }
-                }
+                    console.log("exists")
+                    dbmessages.update({"groupId":document.groupId,"messages.message.id":document.message.id},{$set:{"messages.$":document}});    
+                } 
                 else
                 {
-                    dbmessages.insert({"groupId":document.groupId,"messages":[document]})
+                    dbmessages.findOne({"groupId":document.groupId},function(err,result)
+                    {
+                        if (result)
+                        {
+                            dbmessages.update({"groupId":document.groupId},{$push:{"messages":document}})
+                        }
+                         
+                        else
+                        {
+                            dbmessages.insert({"groupId":document.groupId,"messages":[document]})
+                        }
+                    })
                 }
+                
                 broadcast('pullMessage',[{"groupId":document.groupId,messages:[document]}])
                
             })

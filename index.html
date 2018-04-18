@@ -275,10 +275,12 @@
 
                                     if ($("div.right-section div.message ul li#"+data[x].messages[y].message.id).length > 0)
                                     {
+                                        console.log("exists element")
                                         $("div.right-section div.message ul li#"+data[x].messages[y].message.id).replaceWith(groupTemplate)
                                     }
                                     else
                                     {
+                                        console.log("new element")
                                         $("div.right-section div.message ul").append(groupTemplate)
                                     }
                                 
