@@ -152,7 +152,7 @@
 						                    <div class="chatList">
 							                    <div class="img">
 								                    <!-- <i class="fa fa-circle"></i> -->
-								                    <img src="image/man01.png">
+								                    <img src="{4}">
 							                    </div>
 							                    <div class="desc">
 								                    <small class="time"></small>
@@ -173,6 +173,14 @@
                                 groupTemplate = groupTemplate.replace("{0}",displayName.join(","))
                                 groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
                                 groupTemplate = groupTemplate.replace("{3}",data[x].groupId)
+
+                                if (data[x].groupType == 'User'){
+                                    groupTemplate = groupTemplate.replace("{4}",data[x].channel.members[0].url)
+                                }
+                                else
+                                {
+                                    groupTemplate = groupTemplate.replace("{4}","image/teamwork.png")
+                                }
                             if ($("div.left-section ul li#"+data[x].groupId).length)
                             {
                                 $("div.left-section ul li#"+data[x].groupId).replaceWith(groupTemplate)
