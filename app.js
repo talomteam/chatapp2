@@ -85,7 +85,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 }
                 socket.emit('pullMessage',res)
 
-                dbrooms.update({"groupId":data.groupId},{"read":true},{"upsert":true});
+                dbrooms.update({"groupId":data.groupId},{"status_read":true},{"upsert":true});
             });
         });
         socket.on('requestEvaluation',function(data)
@@ -195,8 +195,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
        {
            if (!result)
            {
-               var roomDetail = {"groupId":document.groupId,"read":false, "channel":{"name":"LINE@","type":document.groupType,"members":[{userId:document.source.userId}]}}
+               var roomDetail = {"groupId":document.groupId,"status_read":false, "channel":{"name":"LINE@","type":document.groupType,"members":[{userId:document.source.userId}]}}
                dbrooms.insert(roomDetail)
+
                broadcast('pullRoom',[roomDetail])
                if (document.groupType == 'Group')
                {
@@ -259,7 +260,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 }
                 
                 broadcast('pullMessage',[{"groupId":document.groupId,messages:[document]}])
-                dbrooms.update({"groupId":document.groupId},{"read":false},{"upsert":true});
+                dbrooms.update({"groupId":document.groupId},{"status_read":false},{"upsert":true});
                
             })
        })
