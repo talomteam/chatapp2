@@ -170,13 +170,14 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
       
         storeMessage(messageEvent);
 
-        date = new Date(messageEvent.message.timestamp)
+        date = new Date(messageEvent.message.timestamp);
         var hours = date.getHours();
         var minutes = date.getMinutes();
         var days = date.getDay();
 
         if (days != 0 && days != 6 && (hours >= 8 && hours <= 17))
         {
+            console.log("reply "+ messageEvent.message.replyToken)
             var replyMessageAuto = "ขณะนี้เป็นเวลานอกทำการ ทางบริษัทขอรับเรื่องและจะดำเนินการในวันทำการต่อไปให้นะครับ @ระบบอัตโนมัติตอบกลับ"
             bot.replyTextMessage(messageEvent.message.replyToken, replyMessageAuto)
         }
