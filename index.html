@@ -174,8 +174,8 @@
                                 groupTemplate = groupTemplate.replace("{2}",data[x].channel.name)
                                 groupTemplate = groupTemplate.replace("{3}",data[x].groupId)
 
-                                if (data[x].groupType == 'User'){
-                                    groupTemplate = groupTemplate.replace("{4}",data[x].channel.members[0].url)
+                                if (data[x].channel.type == 'User'){
+                                    groupTemplate = groupTemplate.replace("{4}",data[x].channel.members[0].pictureUrl)
                                 }
                                 else
                                 {
