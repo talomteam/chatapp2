@@ -350,6 +350,14 @@
                                 $("div.left-section ul li#"+data[x].messages[y].groupId+" div.chatList div.img i.fa").remove();
                                 $("div.left-section ul li#"+data[x].messages[y].groupId+" div.chatList div.img").prepend('<i class="fa fa-circle"></i>');
                                 $("div.left-section ul").prepend($("div.left-section ul li#"+data[x].messages[y].groupId));
+
+                                var displayName = $("div.left-section ul li#"+data[x].messages[y].groupId+" div.chatList div.desc h5").text.split(",");
+                                if ((data[x].messages[y].source.detail != undefined) &&  $.inArray(data[x].messages[y].source.detail.displayName,name) <= -1)
+                                {
+                                        displayName.push(data[x].messages[y].source.detail.displayName);
+                                        $("div.left-section ul li#"+data[x].messages[y].groupId+" div.chatList div.desc h5").text(displayName.join(","))
+
+                                }
                             }
                         }
                        }
