@@ -175,8 +175,8 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         var minutes = date.getMinutes();
         var days = date.getDay();
 
-        console.log("day "+ days + "hours " + hours)
-        if (days == 0 || days == 6 && (hours <= 7 && hours >= 17) && messageEvent.groupType == 'User')
+        console.log("day "+ days + "hours " + hours +"type "+messageEvent.groupType)
+        if ((days == 0 || days == 6) && (hours <= 7 && hours >= 17) && messageEvent.groupType == 'User')
         {
             console.log("reply "+ messageEvent.replyToken)
             var replyMessageAuto = "ขณะนี้เป็นเวลานอกทำการ ทางบริษัทขอรับเรื่องและจะดำเนินการในวันทำการต่อไปให้นะครับ @ระบบอัตโนมัติตอบกลับ"
@@ -198,7 +198,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                broadcast('pullRoom',[roomDetail])
                if (document.groupType == 'Group')
                {
-                    bot.getProfile(document.groupId).then(function(data) {
+
+                    bot.getGroupMember(document.groupId).then(function(data) {
+                        console.log("getmemberinroom")
                         console.log(data);
                     }) 
                }
