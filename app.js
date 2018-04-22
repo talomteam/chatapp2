@@ -176,7 +176,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         var days = date.getDay();
 
         console.log("day "+ days + "hours " + hours)
-        if (days == 0 || days == 6 && (hours <= 7 && hours >= 17))
+        if (days == 0 || days == 6 && (hours <= 7 && hours >= 17) && messageEvent.groupType == 'User')
         {
             console.log("reply "+ messageEvent.replyToken)
             var replyMessageAuto = "ขณะนี้เป็นเวลานอกทำการ ทางบริษัทขอรับเรื่องและจะดำเนินการในวันทำการต่อไปให้นะครับ @ระบบอัตโนมัติตอบกลับ"
@@ -195,7 +195,13 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
            {
                var roomDetail = {"groupId":document.groupId, "channel":{"name":"LINE@","type":document.groupType,"members":[{userId:document.source.userId}]}}
                dbrooms.insert(roomDetail)
-               broadcast('pullRoom',[roomDetail])  
+               broadcast('pullRoom',[roomDetail])
+               if (document.groupType == 'Group')
+               {
+                    bot.getProfile(document.groupId).then(function(data) {
+                        console.log(data);
+                    }) 
+               }
            }
            //update member in room
            if(document.source != "agent" && document["source"]["detail"] == undefined )
