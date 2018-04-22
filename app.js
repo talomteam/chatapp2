@@ -195,11 +195,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
        {
            if (!result)
            {
+               console.log(" not exists room")
                var roomDetail = {"groupId":document.groupId,"status_read":false, "channel":{"name":"LINE@","type":document.groupType,"members":[{userId:document.source.userId}]}}
                dbrooms.insert(roomDetail)
-               console.log("----")
-                console.log(roomDetail)
-                console.log("----")
                broadcast('pullRoom',[roomDetail])
                if (document.groupType == 'Group')
                {
@@ -262,7 +260,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 }
                 
                 broadcast('pullMessage',[{"groupId":document.groupId,messages:[document]}])
-                dbrooms.update({"groupId":document.groupId},{"status_read":false});
+                //dbrooms.update({"groupId":document.groupId},{"status_read":false});
                
             })
        })
