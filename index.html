@@ -151,7 +151,7 @@
                             var groupTemplate = `<li id="{3}">
 						                    <div class="chatList">
 							                    <div class="img">
-								                    <!-- <i class="fa fa-circle"></i> -->
+                                                    <!-- <i class="fa fa-circle"></i> -->
 								                    <img src="{4}">
 							                    </div>
 							                    <div class="desc">
@@ -189,9 +189,10 @@
                             {
                                 $("div.left-section ul").append(groupTemplate)
                             }
-                            if (data[x].status_read)
+                            if (!data[x].status_read)
                             {
                                 $("div.left-section ul").prepend($("div.left-section ul li#"+data[x].groupId))
+                                $("div.left-section ul li#"+data[x].groupId+" div.chatList div.img").prepend('<i class="fa fa-circle"></i>');
                             }
                             
                           
