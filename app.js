@@ -202,7 +202,10 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                     bot.getGroupMember(document.groupId).then(function(data) {
                         console.log("getmemberinroom")
                         console.log(data);
-                    }) 
+                    }).catch(function(error) {
+                        console.log("getmemberinroom")
+                        console.log(error)
+                    });
                }
            }
            //update member in room
