@@ -175,7 +175,11 @@
                                 groupTemplate = groupTemplate.replace("{3}",data[x].groupId)
 
                                 if (data[x].channel.type == 'User'){
-                                    groupTemplate = groupTemplate.replace("{4}",data[x].channel.members[0].pictureUrl)
+                                    var pictureUrl = "image/user.png"
+                                    if (data[x].channel.members[0]){
+                                        pictureUrl = data[x].channel.members[0].pictureUrl
+                                    }
+                                    groupTemplate = groupTemplate.replace("{4}",pictureUrl)
                                 }
                                 else
                                 {
@@ -356,6 +360,10 @@
                                 {
                                         displayName.push(data[x].messages[y].source.detail.displayName);
                                         $("div.left-section ul li#"+data[x].messages[y].groupId+" div.chatList div.desc h5").text(displayName.join(","))
+                                        if(sss)
+                                        {
+
+                                        }
 
                                 }
                             }
