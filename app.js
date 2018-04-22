@@ -85,7 +85,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 }
                 socket.emit('pullMessage',res)
 
-                dbrooms.update({"groupId":data.groupId},{"status_read":true});
+                dbrooms.update({"groupId":data.groupId},{$set:{"status_read":true}});
             });
         });
         socket.on('requestEvaluation',function(data)
@@ -260,7 +260,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
                 }
                 
                 broadcast('pullMessage',[{"groupId":document.groupId,messages:[document]}])
-                //dbrooms.update({"groupId":document.groupId},{"status_read":false});
+                dbrooms.update({"groupId":document.groupId},{$set:{"status_read":false}});
                
             })
        })
