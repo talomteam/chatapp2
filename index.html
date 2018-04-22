@@ -176,7 +176,7 @@
 
                                 if (data[x].channel.type == 'User'){
                                     var pictureUrl = "image/user.png"
-                                    if (data[x].channel.members[0]){
+                                    if (data[x].channel.members[0]!= undefined){
                                         pictureUrl = data[x].channel.members[0].pictureUrl
                                     }
                                     groupTemplate = groupTemplate.replace("{4}",pictureUrl)
