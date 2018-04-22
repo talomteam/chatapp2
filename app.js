@@ -175,6 +175,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
         var minutes = date.getMinutes();
         var days = date.getDay();
 
+        console.log("day "+ days + "hours " + hours)
         if (days != 0 && days != 6 && (hours >= 8 && hours <= 17))
         {
             console.log("reply "+ messageEvent.message.replyToken)
