@@ -197,7 +197,9 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
            {
                var roomDetail = {"groupId":document.groupId,"status_read":false, "channel":{"name":"LINE@","type":document.groupType,"members":[{userId:document.source.userId}]}}
                dbrooms.insert(roomDetail)
+               console.log("----")
                 console.log(roomDetail)
+                console.log("----")
                broadcast('pullRoom',[roomDetail])
                if (document.groupType == 'Group')
                {
