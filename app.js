@@ -185,7 +185,7 @@ mongo.connect('mongodb://127.0.0.1/messaging',function(err,db){
             {
                 nonWorkingHour = true
             }
-            if (hours <= 0 || hours >= 10)
+            if (hours <= 8 || hours >= 17)
             {
                 nonWorkingHour = true
             }
