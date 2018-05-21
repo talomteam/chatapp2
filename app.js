@@ -31,9 +31,9 @@ var ip = require('ip');
 
 var mongo = require('mongodb').MongoClient;
 var bot = LINEBot.Client({
-    channelID: '1567873891',
-    channelSecret: '38bff89c9d11e6b862a5cf8ba8ca6617',
-    channelAccessToken: 'Q2mqJWInhj4b9k8uqZW7PkzRzZrcxGzdqRPd15+51V7/gBrycuwUr01H/jY9Zmh+pZkbHhqcUCe+AmytovUmEN7JZfaMnyszNvb8nQ18VVrZRpWAkts3jYdQqTLJ5cjqvXhOaKssqAe786B5bkwjcgdB04t89/1O/w1cDnyilFU='
+    channelID: '1579713337',
+    channelSecret: '7f2eb2b3ac758dad3fc5106dde1fbb73',
+    channelAccessToken: 'AO/T/I7gymENRS9z84JFxde/pzPUSIgikaGhkA5rOLZGi1ZONo3XiicITyIa1uDPZLO2jq31TAg57mlDIqnKIE0LRvpHl+KvhQ/+jskrMXiv972/7TPrUOoef2sJeQL4mTA77vR+anWSGHGLKzuEQgdB04t89/1O/w1cDnyilFU='
   });
 
 app.use(express.static(__dirname + '/public')); 
